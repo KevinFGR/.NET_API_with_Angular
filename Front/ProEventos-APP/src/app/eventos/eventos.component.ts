@@ -11,17 +11,39 @@ export class EventosComponent {
   constructor(private http:HttpClient){
 
   }
-
-  public eventos: any;
-
-  ngOnInit():void{
-    this.getEventos();
+  public imgWidth: number = 100;
+  public showImg:boolean = false;
+  public events: any = [];
+  public eventsFiltered: any = [];
+  private _listFilter:string="";
+  
+  public get listFilter():string{
+    return this._listFilter;
   }
 
-  public getEventos():void{
+  public set listFilter(value:string){
+    this._listFilter = value;
+    this.eventsFiltered = this.listFilter ? this.filterEvent(this.listFilter) : this.events;
+  }
+
+  public filterEvent(filterBy:string): any{
+    filterBy=filterBy.toLocaleLowerCase();
+    return this.events.filter(
+      (      event: { tema: string; local:string }) => event.tema.toLocaleLowerCase().indexOf(filterBy)!== -1 || event.local.toLocaleLowerCase().indexOf(filterBy)!== -1
+    )
+  }
+
+
+  ngOnInit():void{
+    this.getEvents();
+  }
+
+  public getEvents():void{
     this.http.get("http://localhost:5112/api/eventos").subscribe(
-      response => this.eventos = response,
+      response =>{ this.events = response
+                  this.eventsFiltered=this.events},
       error => console.log(error)
     );
   }
+  
 }
