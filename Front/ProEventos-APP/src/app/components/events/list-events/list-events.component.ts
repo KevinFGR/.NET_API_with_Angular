@@ -1,26 +1,26 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-
+import { Route, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-import { EventoService } from '../../services/evento.service';
-import { Evento } from '../../models/Evento';
+import { ToastrService } from 'ngx-toastr';
+import { Evento } from 'src/app/models/Evento';
+import { EventoService } from 'src/app/services/evento.service';
 
 @Component({
-  selector: 'app-eventos',
-  templateUrl: './eventos.component.html',
-  styleUrls: ['./eventos.component.scss']
+  selector: 'app-list-events',
+  templateUrl: './list-events.component.html',
+  styleUrls: ['./list-events.component.scss']
 })
-export class EventosComponent implements OnInit {
-
+export class ListEventsComponent implements OnInit{
+  
   modalRef?: BsModalRef;
   
   constructor(
     private eventoService:EventoService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
     ) { }
 
   public openModal(template: TemplateRef<any>): void {
@@ -86,4 +86,11 @@ export class EventosComponent implements OnInit {
     }
     this.eventoService.getEventos().subscribe(observer);
   }
+  public url_detail: string='';
+  public redirectDetail(id:number){
+    this.url_detail = "/events/detail/"+ id.toString();
+    this.router.navigate([this.url_detail])
+
+  }
+
 }

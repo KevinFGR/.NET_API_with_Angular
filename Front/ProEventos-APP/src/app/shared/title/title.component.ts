@@ -7,4 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class TitleComponent {
   @Input() title: string = 'titulo';
+  @Input() description: string = 'Curso .NET API + Angular';
+  @Input() fa_icon: string = 'fa fa-table-list';
+  @Input() btn_list: boolean = false;
 }

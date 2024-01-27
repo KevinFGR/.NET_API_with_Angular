@@ -6,8 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './components/eventos/eventos.component';
-import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
+import { EventsComponent } from './components/events/events.component';
+import { SpeakersComponent } from './components/speakers/speakers.component';
 import { NavComponent } from './shared/nav/nav.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -24,20 +24,28 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
 import { EventoService } from './services/evento.service';
-
+import { ListEventsComponent } from './components/events/list-events/list-events.component';
+import { DetailEventsComponent } from './components/events/detail-events/detail-events.component';
+import { UserComponent } from './components/user/user.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
+import { LoginComponent } from './components/user/login/login.component';
 
 @NgModule({
   declarations: [	
     AppComponent,
-    EventosComponent,
-    PalestrantesComponent,
+    EventsComponent,
+    SpeakersComponent,
     NavComponent,
     DashboardComponent,
     ProfileComponent,
     ContactsComponent,
     TitleComponent,
-    DateTimeFormatPipe
-
+    DateTimeFormatPipe,
+    ListEventsComponent,
+    DetailEventsComponent,
+    UserComponent,
+    RegistrationComponent,
+    LoginComponent,
    ],
   imports: [
     BrowserModule,

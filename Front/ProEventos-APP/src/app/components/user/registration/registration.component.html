@@ -1,0 +1,49 @@
+<div class="container d-flex mt-5">
+    <div class="container d-none d-md-block col-6">
+        <h2 class="text-center">Registrate User</h2>
+        <img src="assets/registerImage.png" alt="register image">
+    </div>
+    <div class="container ">
+        <form action="">
+            <legend class="d-block d-md-none border-bottom">Registrate User</legend>
+            <div class="d-flex w-100">
+                <div class="col-6 p-1">
+                    <label for="FName" class="form-label">First Name:</label>
+                    <input type="text" name="FName" id="FName"  class="form-control mb-3" placeholder="Firts name here"/>
+                </div>
+                <div class="col-6 p-1">
+                    <label for="LName" class="form-label">Last Name:</label>
+                    <input type="text" name="LName" id="LName"  class="form-control mb-3" placeholder="Last name here"/>
+                </div>
+            </div>
+            
+            <label for="Email" class="form-label">Email:</label>
+            <input type="text" name="Email" id="Email"  class="form-control mb-3" placeholder="Your email here"/>
+            
+            <label for="User" class="form-label">User:</label>
+            <input type="text" name="User" id="User"  class="form-control mb-3" placeholder="Your user here"/>
+            
+            <div class="d-flex">
+                <div class="col-6 p-1">
+                    <label for="pass" class="form-label">Password:</label>
+                    <input type="password" name="pass" id="pass"  class="form-control mb-3" placeholder="Your password"/>
+                </div>
+                <div class="col-6 p-1">
+                    <label for="pass-confirm" class="form-label">Confirm your password:</label>
+                    <input type="password" name="pass-confirm" id="pass-confirm" class="form-control mb-3" placeholder="Your password"/>
+                </div>
+
+            </div>
+            <div>
+                <input type="checkbox" name="terms" id="terms" class="form-check-input me-2 mb-3"/><label for="terms" class="form-label">I read and agree with the <a href="">terms of usage.</a></label>
+            </div>
+            
+            <button class="btn btn-success col-12 mb-3">Submit</button>
+
+            <div class="text-center">
+                <a class="btn btn-link btn-block" routerLink="/user/login">I'm already registred</a>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,2 +1,95 @@
-<app-title [title]="'Profile'"></app-title>
-<p>profile works!</p>
+<app-title [title]="'Profile'" [fa_icon]="'fa fa-user'" [description]="'Edit your information'"></app-title>
+
+<div class="card mb-3">
+    <form action="">
+        <div class="d-lg-flex d-block flex-row m-3">
+            
+            <div class="card col-lg-3 col-12 text-center mb-3">
+                <img src="assets/perfil.png" alt="profile image" height="100px" width="100px" class="m-auto my-3"/>
+                <h3>_userName</h3>
+                <p><b>Name:</b> Person name example</p>
+                <p>Here you can see a little description of the person profile containing some informations tha cam be helpfull for you.</p>
+                <div class="d-flex text-center">
+                    <div class="card col-6 pt-2">
+                        <p><b>2323</b></p>
+                        <p>Number of something</p>
+                    </div>
+                    <div class="card col-6 pt-2">
+                        <p><b>2323</b></p>
+                        <p>Number of other something</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-12 px-3">        
+                <h3 class="border-bottom">Profile details</h3>
+                <div class="d-lg-flex d-block mb-3 form-row">
+                    <div class="d-flex col-lg-7 col-12">
+                        <div class="col-5">
+                            <label for="title" class="form-label">Title:</label>
+                            <select name="title" id="title" class="form-select">
+                                <option value="1">one</option>
+                                <option value="2">two</option>
+                            </select>
+                        </div>
+                        <div class="col-7 px-2">
+                            <label for="FName" class="form-label">First name:</label>
+                            <input type="text" name="FName" id="FName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-12">
+                        <label for="LName" class="form-label">Last name:</label>
+                        <input type="text" name="LName" id="LName" class="form-control" />
+                    </div>
+                    
+                </div>
+                
+                <div class="d-lg-flex d-block form-row">
+                    <div class="col-lg-5 col-12">
+                        <label for="email" class="form-label">E-mail:</label>
+                        <input type="text" id="email" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3 col-12 px-lg-2 mt-3 mt-lg-0">
+                        <label for="phone" id="phone" class="form-label">Phone:</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+                        <label for="function" id="function" class="form-label">Function:</label>
+                        <select type="text" class="form-select">
+                            <option value="speaker">Speaker</option>
+                            <option value="participant">Participant</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row mt-3"> 
+                    <div class="col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" id="description" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <h3 class="mt-3">Change password</h3>
+                    <hr class="mt-1">
+                    <p>In case to change the password, fill the folowing informations</p>
+                </div>
+
+                <div class="form-row d-lg-flex d-block">
+                    <div class="col-lg-6 col-12 me-2">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" id="password" class="form-control"/>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <label for="password-confirm" class="form-label">Confirm password:</label>
+                        <input type="text" id="password-confirm" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <input type="reset" class="btn btn-outline-secondary col-5 col-md-2" value="Cancel changes" />
+            <input type="submit" class="btn btn-success col-5 col-md-2" value="Save" />
+        </div>
+    </form>
+    
+</div>
