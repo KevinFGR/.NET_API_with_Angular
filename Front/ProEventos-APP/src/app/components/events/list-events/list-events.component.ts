@@ -3,8 +3,8 @@ import { Route, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Evento } from 'src/app/models/Evento';
-import { EventoService } from 'src/app/services/evento.service';
+import { Evento } from '@app/models/Evento';
+import { EventoService } from '@app/services/evento.service';
 
 @Component({
   selector: 'app-list-events',
@@ -87,8 +87,9 @@ export class ListEventsComponent implements OnInit{
     this.eventoService.getEventos().subscribe(observer);
   }
   public url_detail: string='';
+
   public redirectDetail(id:number){
-    this.url_detail = "/events/detail/"+ id.toString();
+    this.url_detail = "/events/details/"+ id.toString();
     this.router.navigate([this.url_detail])
 
   }

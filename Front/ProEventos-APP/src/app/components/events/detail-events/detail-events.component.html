@@ -1,30 +1,77 @@
 <div class="card p-4">
-    <form action="">
+    <form action="" [formGroup]="eventDetailForm">
         <label for="theme" class="form-label">Theme:</label>
-        <input type="text" name="theme" id="theme" class="form-control mb-3" placeholder="Insert theme"/>
+        <input type="text" name="theme" id="theme" class="form-control mb-3" placeholder="Insert theme" formControlName="theme"
+            [ngClass]="{'is-invalid': EDFItem.theme.errors && EDFItem.theme.touched}"/>
+        <div *ngIf="EDFItem.theme.errors?.required" class="invalid-feedback">
+            Theme is required.
+        </div>
+        <div *ngIf="EDFItem.theme.errors?.minlength" class="invalid-feedback">
+            theme has to be more than 4 characters.
+        </div>
+        <div *ngIf="EDFItem.theme.errors?.maxlength" class="invalid-feedback">
+            Theme length has to be less than 50 characters.
+        </div>
         
         <div class="d-block d-md-flex col-12 ">
             <div class="col-md-8 pe-md-2">
                 <label for="local" class="form-label">Local:</label>
-                <input type="text" name="local" id="local" class="form-control mb-3" placeholder="Insert the local address"/>
+                <input type="text" name="local" id="local" class="form-control mb-3" placeholder="Insert the local address" formControlName="local"
+                    [ngClass]="{'is-invalid': EDFItem.local.errors && EDFItem.local.touched}"/>
+                <div *ngIf="EDFItem.local.errors?.required" class="invalid-feedback">
+                    Local is required.
+                </div>
+                <div *ngIf="EDFItem.local.errors?.maxlength" class="invalid-feedback">
+                    Local has to be less than 100 characters.
+                </div>
             </div>
             <div class="col-md-4 ps-md-2">
                 <label for="date-time" class="form-label">Date-time:</label>
-                <input type="date" name="date-time" id="date-time" class="form-control mb-3" />
+                <input type="datetime-local" name="date-time" id="date-time" class="form-control mb-3" formControlName="eventDate"
+                    [ngClass]="{'is-invalid': EDFItem.eventDate.errors && EDFItem.eventDate.touched}"/>
+                <div *ngIf="EDFItem.eventDate.errors?.required" class="invalid-feedback">
+                    Date-time is required.
+                </div>
             </div>
         </div>
         <div class="d-block d-md-flex col-12">
             <div class="col-md-2">
                 <label for="people-qtt" class="form-label">People Qtt</label>
-                <input type="number" name="people-qtt" id="people-qtt" class="form-control mb-3" placeholder="Ex:1000"/>
+                <input type="number" name="people-qtt" id="people-qtt" class="form-control mb-3" placeholder="Ex:1000" formControlName="peopleQtt"
+                    [ngClass]="{'is-invalid': EDFItem.peopleQtt.errors && EDFItem.peopleQtt.touched}"/>
+                <div *ngIf="EDFItem.peopleQtt.errors?.required" class="invalid-feedback">
+                    People Quantity is required.
+                </div>
+                <div *ngIf="EDFItem.peopleQtt.errors?.required" class="invalid-feedback">
+                    People Quantity has to be lass than a milion
+                </div>
             </div>
-            <div class="col-md-4 px-md-3">
+            <div class="col-md-2 px-md-3">
                 <label for="number" class="form-label">Number</label>
-                <input type="number" name="number" id="number" class="form-control mb-3" placeholder="Ex: (00) 00000-0000" />
+                <input type="number" name="number" id="number" class="form-control mb-3" placeholder="Ex: (00) 00000-0000" formControlName="number"
+                    [ngClass]="{'is-invalid': EDFItem.number.errors && EDFItem.number.touched}"/>
+                <div *ngIf="EDFItem.number.errors?.required" class="invalid-feedback">
+                    Number is required.
+                </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control mb-3" placeholder="Ex: email@email.com">
+                <input type="email" name="email" id="email" class="form-control mb-3" placeholder="Ex: email@email.com" formControlName="email"
+                    [ngClass]="{'is-invalid': EDFItem.email.errors && EDFItem.email.touched}"/>
+                <div *ngIf="EDFItem.email.errors?.required" class="invalid-feedback">
+                    Email is required.
+                </div>
+                <div *ngIf="EDFItem.email.errors?.email" class="invalid-feedback">
+                    It has to be a valid email.
+                </div>
+            </div>
+            <div class="col-md-4 ps-md-3">
+                <label for="imgurl" class="form-label">ImgURL:</label>
+                <input type="text" id="imgurl" class="form-control mb-3" formControlName="imageURL"
+                    [ngClass]="{'is-invalid': EDFItem.imageURL.errors && EDFItem.imageURL.touched}"/>
+                <div *ngIf="EDFItem.imageURL.errors?.required" class="invalid-feedback">
+                    imagemURL is required.
+                </div>
             </div>
         </div>
         <div class="card-footer p-3 d-flex justify-content-between">
