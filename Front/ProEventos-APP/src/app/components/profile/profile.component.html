@@ -113,12 +113,12 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <label for="password-confirm" class="form-label">Confirm password:</label>
-                        <input type="text" id="password-confirm" class="form-control" formControlName="passConfirm"
-                        [ngClass]="{'is-invalid': PFormItem.errors && PFormItem.touched}"/>
-                            <div *ngIf="PFormItem.confirmPass.errors?.required" class="invalid-feedback">
+                        <input type="password" id="password-confirm" class="form-control" formControlName="passConfirm"
+                        [ngClass]="{'is-invalid': PFormItem.passConfirm.errors && PFormItem.passConfirm.touched}"/>
+                            <div *ngIf="PFormItem.passConfirm.errors?.required" class="invalid-feedback">
                                 Don't forget to confirm you password.
                             </div>
-                            <div *ngIf="PFormItem.confirmPass.errors?.mustMatch" class="invalid-feedback">
+                            <div *ngIf="PFormItem.passConfirm.errors?.mustMatch" class="invalid-feedback">
                                 Password must match.
                             </div>
                     </div>

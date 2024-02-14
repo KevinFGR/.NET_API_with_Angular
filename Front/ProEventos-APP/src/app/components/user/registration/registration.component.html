@@ -3,7 +3,7 @@
         <h2 class="text-center">Registrate User</h2>
         <img src="assets/registerImage.png" alt="register image">
     </div>
-    <div class="container ">
+    <div class="container col-md-7 col-lg-6">
         <form action="" [formGroup]="registrationForm">
             <legend class="d-block d-md-none border-bottom">Registrate User</legend>
             <div class="d-flex w-100">
@@ -67,7 +67,14 @@
                 </div>
                 <div class="col-6 p-1 mb-3">
                     <label for="pass-confirm" class="form-label">Confirm your password:</label>
-                    <input type="password" name="pass-confirm" id="pass-confirm" class="form-control" placeholder="Your password"/>
+                    <input type="password" name="pass-confirm" id="pass-confirm" class="form-control" placeholder="Your password"
+                    formControlName="passConfirm" [ngClass]="{'is-invalid': RFormItem.passConfirm.errors && RFormItem.passConfirm.touched}" />
+                        <div *ngIf="RFormItem.passConfirm.errors?.required" class="invalid-feedback">
+                            Confirm your password.
+                        </div>
+                        <div *ngIf="RFormItem.passConfirm.errors?.mustMatch" class="invalid-feedback">
+                            Your password must match.
+                        </div>
                 </div>
 
             </div>
