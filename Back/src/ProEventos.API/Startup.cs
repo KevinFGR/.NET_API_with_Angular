@@ -5,6 +5,7 @@ using ProEventos.Application.Contratos;
 using ProEventos.Application;
 using ProEventos.Persistence.Contratos;
 using ProEventos.Persistence;
+using AutoMapper;
 
 namespace ProEventos.API
 {
@@ -23,10 +24,12 @@ namespace ProEventos.API
             services.AddDbContext<ProEventosContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
+            // Configuração necessária para usar o AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            // É necessário adicionar o Newtonsoft para evitar looping infinito ao realizar algum comando no banco de dados
             services.AddControllers().AddNewtonsoftJson(
                 x => x.SerializerSettings.ReferenceLoopHandling =Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            // É necessário adicionar o Newtonsoft para evitar looping infinito ao realizar algum comando no banco de dados
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IGeralPersist, GeralPersist>();            
             services.AddScoped<IEventoPersist, EventoPersist>();

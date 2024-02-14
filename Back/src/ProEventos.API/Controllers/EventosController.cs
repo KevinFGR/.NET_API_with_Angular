@@ -1,10 +1,7 @@
-using System.Diagnostics;
-using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Contratos;
+using ProEventos.Application.Dtos;
 using ProEventos.Domain;
-using ProEventos.Persistence;
-using ProEventos.Persistence.Contextos;
 
 namespace ProEventos.API.Controllers;
 
@@ -29,6 +26,7 @@ public class EventosController : ControllerBase
             {
                 return NotFound("Nenhum evento encontrado.");
             }
+
             return Ok(eventos);
 
         }
@@ -83,7 +81,7 @@ public class EventosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Evento model)
+    public async Task<IActionResult> Post(EventoDto model)
     {
         try
         {
@@ -105,7 +103,7 @@ public class EventosController : ControllerBase
     
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Evento model)
+    public async Task<IActionResult> Put(int id, EventoDto model)
     {
         try
         {
