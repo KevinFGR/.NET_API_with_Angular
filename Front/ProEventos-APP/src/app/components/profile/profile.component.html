@@ -1,11 +1,11 @@
 <app-title [title]="'Profile'" [fa_icon]="'fa fa-user'" [description]="'Edit your information'"></app-title>
 
 <div class="card mb-3">
-    <form action="">
+    <form action="" [formGroup]="profileForm">
         <div class="d-lg-flex d-block flex-row m-3">
             
             <div class="card col-lg-3 col-12 text-center mb-3">
-                <img src="assets/perfil.png" alt="profile image" height="100px" width="100px" class="m-auto my-3"/>
+                <img src="assets/perfil.png" alt="profile image" height="100px" width="100px" class="m-auto my-3 rounded-circle"/>
                 <h3>_userName</h3>
                 <p><b>Name:</b> Person name example</p>
                 <p>Here you can see a little description of the person profile containing some informations tha cam be helpfull for you.</p>
@@ -33,12 +33,26 @@
                         </div>
                         <div class="col-7 px-2">
                             <label for="FName" class="form-label">First name:</label>
-                            <input type="text" name="FName" id="FName" class="form-control" />
+                            <input type="text" name="FName" id="FName" class="form-control" formControlName="FName"
+                            [ngClass]="{'is-invalid':PFormItem.FName.errors && PFormItem.FName.touched}" />
+                                <div *ngIf="PFormItem.FName.errors?.required" class="invalid-feedback">
+                                    First name is required.
+                                </div>
+                                <div *ngIf="PFormItem.FName.errors?.maxlength" class="invalid-feedback" >
+                                    First name can not have more than 20 characters.
+                                </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-12">
                         <label for="LName" class="form-label">Last name:</label>
-                        <input type="text" name="LName" id="LName" class="form-control" />
+                        <input type="text" name="LName" id="LName" class="form-control" formControlName="LName"
+                        [ngClass]="{'is-invalid': PFormItem.LName.errors && PFormItem.LName.touched}" />
+                            <div *ngIf="PFormItem.LName.errors?.required" class="invalid-feedback">
+                                Last name is required.
+                            </div>
+                            <div *ngIf="PFormItem.LName.errors?.maxlength" class="invalid-feedback">
+                                Last Name can not have more than 50 characters.
+                            </div>
                     </div>
                     
                 </div>
@@ -46,11 +60,22 @@
                 <div class="d-lg-flex d-block form-row">
                     <div class="col-lg-5 col-12">
                         <label for="email" class="form-label">E-mail:</label>
-                        <input type="text" id="email" class="form-control"/>
+                        <input type="text" id="email" class="form-control" formControlName="email"
+                        [ngClass]="{'is-invalid': PFormItem.email.errors && PFormItem.email.touched}"/>
+                            <div *ngIf="PFormItem.email.errors?.required" class="invalid-feedback">
+                                Email is required.
+                            </div>
+                            <div *ngIf="PFormItem.email.errors?.email" class="invalid-feedback">
+                                It has to be a valid Email.
+                            </div>
                     </div>
                     <div class="col-lg-3 col-12 px-lg-2 mt-3 mt-lg-0">
-                        <label for="phone" id="phone" class="form-label">Phone:</label>
-                        <input type="text" class="form-control" />
+                        <label for="phone" id="number" class="form-label">Number:</label>
+                        <input type="text" id="number" class="form-control" formControlName="number"
+                        [ngClass]="{'is-invalid':PFormItem.number.errors && PFormItem.number.touched}"/>
+                            <div class="invalid-feedback">
+                                Number is required.
+                            </div>
                     </div>
                     <div class="col-lg-4 col-12 mt-3 mt-lg-0">
                         <label for="function" id="function" class="form-label">Function:</label>
@@ -64,7 +89,7 @@
                 <div class="form-row mt-3"> 
                     <div class="col-12">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" id="description" class="form-control"/>
+                        <textarea type="text" id="description" class="form-control"></textarea>
                     </div>
                 </div>
 
@@ -77,11 +102,25 @@
                 <div class="form-row d-lg-flex d-block">
                     <div class="col-lg-6 col-12 me-2">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" id="password" class="form-control"/>
+                        <input type="password" id="password" class="form-control" formControlName="password"
+                        [ngClass]="{'is-invalid': PFormItem.password.errors && PFormItem.password.touched}"/>
+                            <div [ngClass]="PFormItem.password.errors?.required && PFormItem.password.touched"class="invalid-feedback">
+                                Password is required.
+                            </div>
+                            <div *ngIf="PFormItem.password.errors?.minlength && PFormItem.password.touched" class="invalid-feedback">
+                                Password has to be more than 8 characters.
+                            </div>
                     </div>
                     <div class="col-lg-6 col-12">
                         <label for="password-confirm" class="form-label">Confirm password:</label>
-                        <input type="text" id="password-confirm" class="form-control"/>
+                        <input type="text" id="password-confirm" class="form-control" formControlName="passConfirm"
+                        [ngClass]="{'is-invalid': PFormItem.errors && PFormItem.touched}"/>
+                            <div *ngIf="PFormItem.confirmPass.errors?.required" class="invalid-feedback">
+                                Don't forget to confirm you password.
+                            </div>
+                            <div *ngIf="PFormItem.confirmPass.errors?.mustMatch" class="invalid-feedback">
+                                Password must match.
+                            </div>
                     </div>
                 </div>
             </div>

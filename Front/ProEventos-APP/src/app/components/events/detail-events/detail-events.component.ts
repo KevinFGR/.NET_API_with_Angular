@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-events',
@@ -7,16 +7,17 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./detail-events.component.scss']
 })
 export class DetailEventsComponent implements OnInit{
-  eventDetailForm! : FormGroup;
-  
-  get EDFItem(): any{
-    return this.eventDetailForm.controls;
-  }
-
   constructor(private fb:FormBuilder) { }
   
+  eventDetailForm! : FormGroup;
+
+  get EDFItem(): any{
+    // EDFItem => EventDetailForm Item
+    return this.eventDetailForm.controls;
+  }
+  
   ngOnInit(): void { 
-    this.validation()
+    this.validation();
   }
   
   public validation():void{
@@ -30,7 +31,6 @@ export class DetailEventsComponent implements OnInit{
       number: ['', [Validators.required]],
       imageURL: ['', [Validators.required]]
     })
-    
   }
-
+  
 }

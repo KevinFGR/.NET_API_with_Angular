@@ -1,14 +1,29 @@
 <div class="d-flex align-items-center vh-100 ">
     
-    <div class="text-center  mx-auto  shadow p-4 bg-white rounded align-middle">
-        <form class="form-signin">
+    <div class="text-center  mx-auto  shadow px-5 pt-4 bg-white rounded align-middle">
+        <form class="form-signin" [formGroup]="loginForm">
             <i class="fa fa-users fs-2 my-2"></i>
             <h2 class="my-3">Enter with</h2>
-            <label for="username" class="sr-only">Name</label>
-            <input id="username" name="username" type="text" placeholder="User" class="form-control" required />
+
+            <div name="dont remove this div">
+                <label for="username" class="sr-only">Name</label>
+                <input id="username" name="username" type="text" placeholder="User" class="form-control mb-1" formControlName="login"
+                [ngClass]="{'is-invalid': LFormItem.login.errors && LFormItem.login.touched}"/>
+                
+                <div *ngIf="LFormItem.login.errors?.required" class="invalid-feedback">
+                    Login is required.
+                </div>
+            </div>
+                
             <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" type="pass" placeholder="Password" class="form-control" required />
-            <button class="btn btn-primary w-100 ">Entrar</button>
+            <input id="password" name="password" type="pass" placeholder="Password" class="form-control" formControlName="password"
+                [ngClass]="{'is-invalid': LFormItem.password.errors && LFormItem.password.touched}" />
+
+            <div *ngIf="LFormItem.password.errors?.required" class="invalid-feedback">
+                Password is required.
+            </div>
+
+            <input type="submit" class="btn btn-primary w-100 mt-3" Value="Login" [disabled]="!loginForm.valid" />
             <p class="my-3 text-muted">Do not have a login? registrate here.</p>
             <a class="btn btn-lg mb-5 text-primary" routerLink="/user/registration">I want to registrate</a>
         </form>

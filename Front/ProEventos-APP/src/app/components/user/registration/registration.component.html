@@ -4,41 +4,83 @@
         <img src="assets/registerImage.png" alt="register image">
     </div>
     <div class="container ">
-        <form action="">
+        <form action="" [formGroup]="registrationForm">
             <legend class="d-block d-md-none border-bottom">Registrate User</legend>
             <div class="d-flex w-100">
-                <div class="col-6 p-1">
+                <div class="col-6 py-1 mb-3">
                     <label for="FName" class="form-label">First Name:</label>
-                    <input type="text" name="FName" id="FName"  class="form-control mb-3" placeholder="Firts name here"/>
+                    <input type="text" name="FName" id="FName"  class="form-control" placeholder="Firts name here"
+                    formControlName="FName" [ngClass]="{'is-invalid': RFormItem.FName.errors && RFormItem.FName.touched}"/>
+                        <div *ngIf="RFormItem.FName.errors?.required" class="invalid-feedback">
+                            First name is required.
+                        </div>
+                        <div *ngIf="RFormItem.FName.errors?.maxlength" class="invalid-feedback">
+                            First name has to be less than 20 characters.
+                        </div>
                 </div>
-                <div class="col-6 p-1">
+                <div class="col-6 p-1 mb-3">
                     <label for="LName" class="form-label">Last Name:</label>
-                    <input type="text" name="LName" id="LName"  class="form-control mb-3" placeholder="Last name here"/>
+                    <input type="text" name="LName" id="LName"  class="form-control" placeholder="Last name here"
+                    formControlName="LName" [ngClass]="{'is-invalid':RFormItem.LName.errors && RFormItem.LName.touched}"/>
+                        <div *ngIf="RFormItem.LName.errors?.required" class="invalid-feedback">
+                            Last name is required.
+                        </div>
+                        <div *ngIF="RFormItem.LName.errors?.maxlength" class="invalid-feedback">
+                            Last name can not have more than 50 characters.
+                        </div>
                 </div>
             </div>
             
-            <label for="Email" class="form-label">Email:</label>
-            <input type="text" name="Email" id="Email"  class="form-control mb-3" placeholder="Your email here"/>
-            
-            <label for="User" class="form-label">User:</label>
-            <input type="text" name="User" id="User"  class="form-control mb-3" placeholder="Your user here"/>
-            
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email:</label>
+                <input type="text" name="Email" id="Email"  class="form-control" placeholder="Your email here"
+                formControlName="email" [ngClass]="{'is-invalid': RFormItem.email.errors && RFormItem.email.touched}"/>
+                    <div *ngIf="RFormItem.email.errors?.required" class="invalid-feedback">
+                        Email is required
+                    </div>
+                    <div *ngIf="RFormItem.email.errors?.email" class="invalid-feedback">
+                        It has to be a valid email.
+                    </div>
+            </div>
+            <div class="mb-3">
+                <label for="User" class="form-label">User:</label>
+                <input type="text" name="User" id="User"  class="form-control" placeholder="Your user here"
+                formControlName="user" [ngClass]="{'is-invalid': RFormItem.user.errors && RFormItem.user.touched}"/>
+                    <div *ngIf="RFormItem.user.errors?.required" class="invalid-feedback">
+                        User is required.
+                    </div>
+                    <div *ngIf="RFormItem.user.errors?.maxlength" class="invalid-feedback">
+                        User can not have more than 20 characters.
+                    </div>
+            </div>
             <div class="d-flex">
-                <div class="col-6 p-1">
+                <div class="col-6 p-1 mb-3">
                     <label for="pass" class="form-label">Password:</label>
-                    <input type="password" name="pass" id="pass"  class="form-control mb-3" placeholder="Your password"/>
+                    <input type="password" name="pass" id="pass"  class="form-control" placeholder="Your password"
+                    formControlName="password" [ngClass]="{'is-invalid': RFormItem.password.errors && RFormItem.password.touched}"/>
+                        <div *ngIf="RFormItem.password.errors?.required" class="invalid-feedback">
+                            Password is required.
+                        </div>
+                        <div *ngIf="RFormItem.password.errors?.minlength" class="invalid-feedback">
+                            Password has to be more than 8 characters.
+                        </div>
                 </div>
-                <div class="col-6 p-1">
+                <div class="col-6 p-1 mb-3">
                     <label for="pass-confirm" class="form-label">Confirm your password:</label>
-                    <input type="password" name="pass-confirm" id="pass-confirm" class="form-control mb-3" placeholder="Your password"/>
+                    <input type="password" name="pass-confirm" id="pass-confirm" class="form-control" placeholder="Your password"/>
                 </div>
 
             </div>
-            <div>
-                <input type="checkbox" name="terms" id="terms" class="form-check-input me-2 mb-3"/><label for="terms" class="form-label">I read and agree with the <a href="">terms of usage.</a></label>
+            <div class="mb-3">
+                <input type="checkbox" name="terms" id="terms" class="form-check-input me-2"
+                formControlName="terms" [ngClass]="{'is-invalid': RFormItem.terms.errors && RFormItem.terms.touched}"/>
+                <label for="terms" class="form-label ">I read and agree with the <a href="">terms of usage.</a></label>
+                    <div *ngIf="RFormItem.terms.errors?.required" class="invalid-feedback">
+                        You have to agree with the terms if you want to continue.
+                    </div>
             </div>
             
-            <button class="btn btn-success col-12 mb-3">Submit</button>
+            <input type="submit" class="btn btn-success col-12 mb-3" [disabled]="!registrationForm.valid"/>
 
             <div class="text-center">
                 <a class="btn btn-link btn-block" routerLink="/user/login">I'm already registred</a>

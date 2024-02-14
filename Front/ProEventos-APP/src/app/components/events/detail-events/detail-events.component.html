@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-2 px-md-3">
                 <label for="number" class="form-label">Number</label>
-                <input type="number" name="number" id="number" class="form-control mb-3" placeholder="Ex: (00) 00000-0000" formControlName="number"
+                <input type="text" name="number" id="number" class="form-control mb-3" placeholder="Ex: (00) 00000-0000" formControlName="number"
                     [ngClass]="{'is-invalid': EDFItem.number.errors && EDFItem.number.touched}"/>
                 <div *ngIf="EDFItem.number.errors?.required" class="invalid-feedback">
                     Number is required.
@@ -76,7 +76,7 @@
         </div>
         <div class="card-footer p-3 d-flex justify-content-between">
             <input type="reset" class="btn btn-outline-secondary  col-5 col-md-2" value="Cancel changes"/>
-            <input type="submit" class="btn btn-success  col-5 col-md-2" value="Save"/>
+            <input type="submit" class="btn btn-success  col-5 col-md-2" value="Save" [disabled]="!eventDetailForm.valid"/>
         </div>
     </form>
 </div>
