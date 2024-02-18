@@ -24,7 +24,7 @@ public class EventosController : ControllerBase
             var eventos= await _eventoService.GetAllEventosAsync(true);
             if (eventos ==null)
             {
-                return NotFound("Nenhum evento encontrado.");
+                return NoContent();
             }
 
             return Ok(eventos);
@@ -34,7 +34,7 @@ public class EventosController : ControllerBase
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar recuperar eventos. Error{ex.Message}");
+            $"Error trying to get events. Error{ex.Message}");
         }
 
     }
@@ -46,7 +46,7 @@ public class EventosController : ControllerBase
             var evento = await _eventoService.GetEventoByIdAsync(id, true);
             if (evento ==null)
             {
-                return NotFound("Nenhum evento encontrado.");
+                return NoContent();
             }
             return Ok(evento);
 
@@ -55,7 +55,7 @@ public class EventosController : ControllerBase
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar recuperar eventos. Error{ex.Message}");
+            $"Error trying to get this event.  Error{ex.Message}");
         }
     }
 
@@ -67,7 +67,7 @@ public class EventosController : ControllerBase
             var evento = await _eventoService.GetAllEventosByTemaAsync(tema, true);
             if (evento ==null)
             {
-                return NotFound("Nenhum evento encontrado.");
+                return NoContent();
             }
             return Ok(evento);
 
@@ -76,7 +76,7 @@ public class EventosController : ControllerBase
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar recuperar eventos. Error{ex.Message}");
+            $"Error trying to get events. Error{ex.Message}");
         }
     }
 
@@ -88,7 +88,7 @@ public class EventosController : ControllerBase
             var evento = await _eventoService.AddEvento(model);
             if (evento == null)
             {
-                return BadRequest("Erro ao tentar adicionar evento.");
+                return NoContent();
             }
             return Ok(evento);
 
@@ -97,7 +97,7 @@ public class EventosController : ControllerBase
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar adicionar eventos. Error{ex.Message}");
+            $"Something went wrong whent trying to add this event. Error{ex.Message}");
         }
     }
     
@@ -110,7 +110,7 @@ public class EventosController : ControllerBase
             var evento = await _eventoService.UpdateEvento(id, model);
             if (evento ==null)
             {
-                return BadRequest("Erro ao tentar adicionar evento.");
+                return NoContent();
             }
             return Ok(evento);
 
@@ -119,7 +119,7 @@ public class EventosController : ControllerBase
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar atualizar eventos. Error{ex.Message}");
+            $"Something went wront while updating this event. Error{ex.Message}");
         }    
     }
 
@@ -128,13 +128,18 @@ public class EventosController : ControllerBase
     {
         try
         {
-            return await _eventoService.DeleteEvento(id) ? Ok("Deletado") : BadRequest("Não foi possível deletar evento");
+            var evento = await _eventoService.GetEventoByIdAsync(id);
+            if(evento == null){
+                return NoContent();
+            }
+            return await _eventoService.DeleteEvento(id) ? Ok("Deleted") :
+                BadRequest("It wasn't possible to delete this event.");
         }
         catch (Exception ex)
         {
             
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-            $"Erro ao tentar recuperar eventos. Error{ex.Message}");
+            $"Something went wrong trying to delete this event. Error{ex.Message}");
         }
     }
 }

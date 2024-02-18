@@ -1,9 +1,16 @@
+// using System.ComponentModel.DataAnnotations;
+
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProEventos.Domain
 
 {
+    // Use this in case the Database has a diferent name of the model class.
+    // [Table("TableName")] 
     public class Evento
     {
+        // It culd be necessary if you dont use Id as the name of you PrimaryKey
+        // [Key] 
         public int Id { get; set; }
         public string Local { get; set; }
         public DateTime? DataEvento { get; set; }
@@ -15,5 +22,9 @@ namespace ProEventos.Domain
         public IEnumerable<Lote> Lotes { get; set; }
         public IEnumerable<RedeSocial> RedesSociais { get; set; }
         public IEnumerable<PalestranteEvento> PalestrantesEventos { get; set; }
+        
+        // Use NotMapped in case you have a field tha will be not created in the DataBase.
+        // [NotMapped]
+        // public int Field_test { get; set; }
     }
 }
