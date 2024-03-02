@@ -23,13 +23,37 @@ export class ListEventsComponent implements OnInit{
     private router: Router
     ) { }
 
-  public openModal(template: TemplateRef<any>): void {
+  public eventTheme: String = '';
+  public eventId: number = 0;
+  public openModal(event:any, template: TemplateRef<any>, eventTheme:String, eventId:number): void {
+    // This is the Delete button modal
+    event.stopPropagation();
+    this.eventTheme = eventTheme;
+    this.eventId = eventId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
  
-  confirm(): void {
+  confirmDelete(): void {
     this.modalRef?.hide();
-    this.toastr.success('The event was successfully deleted', 'Deleted');
+
+    this.spinner.show();
+    this.eventoService.deleteEvent(this.eventId).subscribe(
+      (result:any)=>{
+        if(result.message =='Deleted'){
+          this.toastr.success('The event was successfully deleted', 'Deleted');
+          this.spinner.hide();
+          this.getEvents();
+
+        }
+      },
+      (error:any)=>{
+        this.spinner.hide();
+        this.toastr.error(`Error trying delete event ${this.eventTheme}, Id=${this.eventId}`, "Error");
+        console.error(error);
+      },
+      ()=>{},
+    )
+
   }
  
   public decline(): void {
@@ -64,13 +88,13 @@ export class ListEventsComponent implements OnInit{
 
   public ngOnInit(): void {
     this.spinner.show();
-    this.getEventos();
+    this.getEvents();
   }
 
   public alterarImagem():void {
     this.exibirImagem = !this.exibirImagem;
   }
-  public getEventos(): void {
+  public getEvents(): void {
     const observer =
     {
       next:(_eventos:Evento[]) =>{
@@ -78,13 +102,13 @@ export class ListEventsComponent implements OnInit{
         this.eventosFiltrados = this.eventos
       },
       error:(error:any)  => {
-        console.log(error);
+        console.error(error);
         this.spinner.hide();
         this.toastr.error('Something went wrong searching events', 'Error')
       },
       complete:() => this.spinner.hide()
     }
-    this.eventoService.getEventos().subscribe(observer);
+    this.eventoService.getEvents().subscribe(observer);
   }
   public url_detail: string='';
 

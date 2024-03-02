@@ -2,15 +2,15 @@
     <form action="" [formGroup]="eventDetailForm">
         <div class="mb-3">
             <label for="theme" class="form-label">Theme:</label>
-            <input type="text" name="theme" id="theme" class="form-control" placeholder="Insert theme" formControlName="theme"
-                [ngClass]="{'is-invalid': EDFItem.theme.errors && EDFItem.theme.touched}"/>
-                <div *ngIf="EDFItem.theme.errors?.required" class="invalid-feedback">
+            <input type="text" name="theme" id="theme" class="form-control" placeholder="Insert theme" 
+                formControlName="tema" [ngClass]="cssValidator(EDFItem.tema)" />
+                <div *ngIf="EDFItem.tema.errors?.required" class="invalid-feedback">
                     Theme is required.
                 </div>
-                <div *ngIf="EDFItem.theme.errors?.minlength" class="invalid-feedback">
+                <div *ngIf="EDFItem.tema.errors?.minlength" class="invalid-feedback">
                     theme has to be more than 4 characters.
                 </div>
-                <div *ngIf="EDFItem.theme.errors?.maxlength" class="invalid-feedback">
+                <div *ngIf="EDFItem.tema.errors?.maxlength" class="invalid-feedback">
                     Theme length has to be less than 50 characters.
                 </div>
         </div>
@@ -18,8 +18,8 @@
         <div class="d-block d-md-flex col-12 ">
             <div class="col-md-8 pe-md-2 mb-3">
                 <label for="local" class="form-label">Local:</label>
-                <input type="text" name="local" id="local" class="form-control" placeholder="Insert the local address" formControlName="local"
-                    [ngClass]="{'is-invalid': EDFItem.local.errors && EDFItem.local.touched}"/>
+                <input type="text" name="local" id="local" class="form-control" placeholder="Insert the local address" 
+                    formControlName="local" [ngClass]="cssValidator(EDFItem.local)"/>
                 <div *ngIf="EDFItem.local.errors?.required" class="invalid-feedback">
                     Local is required.
                 </div>
@@ -28,10 +28,12 @@
                 </div>
             </div>
             <div class="col-md-4 ps-md-2 mb-3">
-                <label for="date-time" class="form-label">Date-time:</label>
-                <input type="datetime-local" name="date-time" id="date-time" class="form-control" formControlName="eventDate"
-                    [ngClass]="{'is-invalid': EDFItem.eventDate.errors && EDFItem.eventDate.touched}"/>
-                <div *ngIf="EDFItem.eventDate.errors?.required" class="invalid-feedback">
+                <label for="date-time"class="form-label">Date-time:</label>
+                <input type="text" name="date-time" id="date-time" class="form-control" 
+                    bsDatepicker [bsConfig]="{adaptivePosition: true, dateInputFormat: 'DD/MM/YYYY hh:mm a'}"            
+                    formControlName="dataEvento" [ngClass]="cssValidator(EDFItem.dataEvento)"
+                    value="{{event.dataEvento| DateFormat}}"/>
+                <div *ngIf="EDFItem.dataEvento.errors?.required" class="invalid-feedback">
                     Date-time is required.
                 </div>
             </div>
@@ -39,27 +41,27 @@
         <div class="d-block d-md-flex col-12">
             <div class="col-md-2 mb-3">
                 <label for="people-qtt" class="form-label">People Qtt</label>
-                <input type="number" name="people-qtt" id="people-qtt" class="form-control" placeholder="Ex:1000" formControlName="peopleQtt"
-                    [ngClass]="{'is-invalid': EDFItem.peopleQtt.errors && EDFItem.peopleQtt.touched}"/>
-                <div *ngIf="EDFItem.peopleQtt.errors?.required" class="invalid-feedback">
+                <input type="number" name="people-qtt" id="people-qtt" class="form-control" placeholder="Ex:1000" 
+                    formControlName="qtdPessoas" [ngClass]="cssValidator(EDFItem.qtdPessoas)"/>
+                <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
                     People Quantity is required.
                 </div>
-                <div *ngIf="EDFItem.peopleQtt.errors?.required" class="invalid-feedback">
+                <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
                     People Quantity has to be lass than a milion.
                 </div>
             </div>
             <div class="col-md-2 px-md-3 mb-3">
                 <label for="number" class="form-label">Number</label>
-                <input type="text" name="number" id="number" class="form-control" placeholder="Ex: (00) 00000-0000" formControlName="number"
-                    [ngClass]="{'is-invalid': EDFItem.number.errors && EDFItem.number.touched}"/>
-                <div *ngIf="EDFItem.number.errors?.required" class="invalid-feedback">
+                <input type="text" name="number" id="number" class="form-control" placeholder="Ex: (00) 00000-0000"
+                    formControlName="telefone" [ngClass]="cssValidator(EDFItem.telefone)"/>
+                <div *ngIf="EDFItem.telefone.errors?.required" class="invalid-feedback">
                     Number is required.
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Ex: email@email.com" formControlName="email"
-                    [ngClass]="{'is-invalid': EDFItem.email.errors && EDFItem.email.touched}"/>
+                <input type="email" name="email" id="email" class="form-control" placeholder="Ex: email@email.com"
+                    formControlName="email" [ngClass]="cssValidator(EDFItem.email)"/>
                 <div *ngIf="EDFItem.email.errors?.required" class="invalid-feedback">
                     Email is required.
                 </div>
@@ -69,16 +71,16 @@
             </div>
             <div class="col-md-4 ps-md-3 mb-3">
                 <label for="imgurl" class="form-label">ImgURL:</label>
-                <input type="text" id="imgurl" class="form-control" formControlName="imageURL"
-                    [ngClass]="{'is-invalid': EDFItem.imageURL.errors && EDFItem.imageURL.touched}"/>
-                <div *ngIf="EDFItem.imageURL.errors?.required" class="invalid-feedback">
+                <input type="text" id="imgurl" class="form-control"
+                    formControlName="imagemURL" [ngClass]="cssValidator(EDFItem.imagemURL)"/>
+                <div *ngIf="EDFItem.imagemURL.errors?.required" class="invalid-feedback">
                     imagemURL is required.
                 </div>
             </div>
         </div>
         <div class="card-footer p-3 d-flex justify-content-between">
             <input type="reset" class="btn btn-outline-secondary  col-5 col-md-2" value="Cancel changes"/>
-            <input type="submit" class="btn btn-success  col-5 col-md-2" value="Save" [disabled]="!eventDetailForm.valid"/>
+            <input type="button" class="btn btn-success  col-5 col-md-2" value="Save" [disabled]="!eventDetailForm.valid" (click)="saveChanges()"/>
         </div>
     </form>
 </div>

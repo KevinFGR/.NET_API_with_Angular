@@ -10,16 +10,25 @@ export class EventoService {
 
   private baseURL:string = "http://localhost:5000/api/eventos";
 
-  public getEventos(): Observable<Evento[]>{
+  public getEvents(): Observable<Evento[]>{
     return this.http.get<Evento[]>(this.baseURL);
   }
 
-  public getEventosByTema(tema:string): Observable<Evento[]>{
-    return this.http.get<Evento[]>(`${this.baseURL}/${tema}/tema`);
+  public getEventsByTheme(theme:string): Observable<Evento[]>{
+    return this.http.get<Evento[]>(`${this.baseURL}/${theme}/tema`);
   }
 
-  public getEventoById(id:number): Observable<Evento>{
+  public getEventById(id:number): Observable<Evento>{
     return this.http.get<Evento>(`${this.baseURL}/${id}`);
+  }
+  public postEvent(event:Evento):Observable<Evento>{
+    return this.http.post<Evento>(this.baseURL, event);
+  }
+  public putEvent(id:number, event:Evento):Observable<Evento>{
+    return this.http.put<Evento>(`${this.baseURL}/${id}`,event);
+  }
+  public deleteEvent(id:number):Observable<any>{
+    return this.http.delete(`${this.baseURL}/${id}`);
   }
 
 
