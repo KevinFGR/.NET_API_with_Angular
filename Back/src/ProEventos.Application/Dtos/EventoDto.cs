@@ -10,6 +10,7 @@ namespace ProEventos.Application.Dtos
         public string Local{get;set;}
 
         public DateTime? DataEvento{get;set;}
+
         [Required(ErrorMessage ="You have to set a {0} to your event"),
         StringLength(50, MinimumLength = 4, ErrorMessage = "{0} need at least 4 character and less than 50")
         // MaxLength(50),
@@ -22,8 +23,8 @@ namespace ProEventos.Application.Dtos
         Range(1,120000, ErrorMessage ="{0} has to be between 1 and 120.000")]
         public int QtdPessoas{get;set;}
 
-        // The regex espression has to have "spaces" ' ' between the "or" expression '|'
-        [RegularExpression(@".*\.(gif | jpe?g | bmp | png)$",
+        // In case of having problens on this validation check "spaces" ' ' between the "or" expression '|'
+        [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$",
             ErrorMessage ="this URL is invalid for an image URL. it must be finished by .jpg, .jpeg, .png, .gif or .bmp")]
         public string ImagemURL{get;set;}
 

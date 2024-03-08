@@ -30,7 +30,7 @@
             <div class="col-md-4 ps-md-2 mb-3">
                 <label for="date-time"class="form-label">Date-time:</label>
                 <input type="text" name="date-time" id="date-time" class="form-control" 
-                    bsDatepicker [bsConfig]="{adaptivePosition: true, dateInputFormat: 'DD/MM/YYYY hh:mm a'}"            
+                    bsDatepicker [bsConfig]="bsConfig"
                     formControlName="dataEvento" [ngClass]="cssValidator(EDFItem.dataEvento)"
                     value="{{event.dataEvento| DateFormat}}"/>
                 <div *ngIf="EDFItem.dataEvento.errors?.required" class="invalid-feedback">

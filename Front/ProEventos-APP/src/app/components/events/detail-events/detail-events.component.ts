@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Evento } from '@app/models/Evento';
 import { EventoService } from '@app/services/evento.service';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,13 +17,31 @@ export class DetailEventsComponent implements OnInit{
               private router:ActivatedRoute,
               private eventoService: EventoService,
               private toastr: ToastrService,
-              private spinner: NgxSpinnerService) { }
-              
-              
-  ngOnInit(): void { 
-    this.loadEvent();
-    this.validation();
+              private spinner: NgxSpinnerService,
+              private localeService: BsLocaleService) 
+    {
+      // If you want to set DatePicker to portuguese
+      // this.localeService.use('pt-br');
+    } 
+    ngOnInit(): void { 
+      this.loadEvent();
+      this.validation();
+    }
+  
+  // this variable mean the mode of change to make on the databese on save  (POST or PUT)
+  saveState = 'postEvent';
+  
+  // For DatePicker configuration
+  // The JS is adding 3 hours in the date-time input. This is happening because of the GMT 
+  bsConfig: any = {
+    // localeService: "pt-br",
+    withTimepicker: true, 
+    adaptivePosition: true,
+    dateInputFormat: 'DD/MM/YYYY hh:mm a',
+    showWeekNumbers: false,
+    containerClass: 'theme-default'
   }
+
 
   eventDetailForm! : FormGroup;
   get EDFItem(): any{
@@ -36,26 +55,25 @@ export class DetailEventsComponent implements OnInit{
     const eventIdParam = this.router.snapshot.paramMap.get('id')
 
     if (eventIdParam != null){
+      this.saveState = 'putEvent';
       // the pluss icon (+) before the string var changes the type to int
       this.eventoService.getEventById(+eventIdParam).subscribe(
         (event:Evento) => {
-          this.spinner.hide();
-          // copying the event returnt by getEventoById to the event var;
+          
+          // copying the event returned by getEventoById to the event var;
           // If you just type <this.event = event> the js will vinculate the memory addrees. It won't make a copy  
           this.event = {...event}; 
           this.eventDetailForm.patchValue(this.event);
         },
         (error:any) => {
-          this.spinner.hide();
+          
           this.toastr.error("Error trying get event.");
           console.log(error);
         },
-        () => {this.spinner.hide();}
       );
     }
     this.spinner.hide();
   }
-  
   
   public validation():void{
     this.eventDetailForm = this.fb.group({
@@ -73,21 +91,26 @@ export class DetailEventsComponent implements OnInit{
   public cssValidator(FItem:FormControl):any{
     return {'is-invalid' : FItem.errors && FItem.touched};
   }
+
   public saveChanges():void{
     this.spinner.show();
     if(this.eventDetailForm.valid){
-      this.event = {... this.eventDetailForm.value};
 
-      this.eventoService.postEvent(this.event).subscribe(
+
+      this.saveState === 'postEvent' ? 
+        this.event = {... this.eventDetailForm.value}: 
+        this.event = {id: this.event.id,
+                      ... this.eventDetailForm.value};
+
+      this.eventoService[this.saveState](this.event).subscribe(
         () => {
-          this.spinner.hide();
           this.toastr.success('Event successfully saved', "Success");},
         (error:any) => {
-          this.spinner.hide();
           this.toastr.error(`Error trying save Event; ${error}`, "Error");
           console.error(error);
         },
-        () => {this.spinner.hide();},
+      ).add(
+        ()=>{this.spinner.hide()}
       );
     }
   }
