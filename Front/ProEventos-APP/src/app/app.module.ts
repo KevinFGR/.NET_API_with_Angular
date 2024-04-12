@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgxCurrencyDirective } from "ngx-currency";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventsComponent } from './components/events/events.component';
@@ -28,6 +29,8 @@ defineLocale('pt-br', ptBrLocale)
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
+
 import { ListEventsComponent } from './components/events/list-events/list-events.component';
 import { DetailEventsComponent } from './components/events/detail-events/detail-events.component';
 import { UserComponent } from './components/user/user.component';
@@ -64,6 +67,7 @@ import { LoginComponent } from './components/user/login/login.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
+    NgxCurrencyDirective,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
@@ -71,7 +75,10 @@ import { LoginComponent } from './components/user/login/login.component';
       progressBar:true
     })
   ],
-  providers: [EventoService],
+  providers: [
+    EventoService,
+    LoteService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

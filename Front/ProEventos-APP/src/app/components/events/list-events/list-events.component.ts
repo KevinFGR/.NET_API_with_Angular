@@ -117,5 +117,5 @@ export class ListEventsComponent implements OnInit{
     this.router.navigate([this.url_detail])
 
   }
-
+  
 }

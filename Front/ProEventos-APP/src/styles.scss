@@ -7,3 +7,23 @@
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+$bg-c-d:#111122;
+$bg-c-d2: #222233;
+
+.bg-b-dark{
+    background-color: $bg-c-d;
+}
+.bg-b-dark2{
+    background-color:$bg-c-d2;
+}
+
+::-webkit-scrollbar{
+    width: 15px;
+}
+::-webkit-scrollbar-track{
+    background-color: $bg-c-d2;
+}
+::-webkit-scrollbar-thumb{
+    background-color: $bg-c-d;
+}

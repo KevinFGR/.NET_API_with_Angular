@@ -30,9 +30,8 @@
             <div class="col-md-4 ps-md-2 mb-3">
                 <label for="date-time"class="form-label">Date-time:</label>
                 <input type="text" name="date-time" id="date-time" class="form-control" 
-                    bsDatepicker [bsConfig]="bsConfig"
-                    formControlName="dataEvento" [ngClass]="cssValidator(EDFItem.dataEvento)"
-                    value="{{event.dataEvento| DateFormat}}"/>
+                formControlName="dataEvento" [ngClass]="cssValidator(EDFItem.dataEvento)"
+                bsDatepicker [bsConfig]="bsConfigEvent" value="{{event.dataEvento| DateFormat}}"/>
                 <div *ngIf="EDFItem.dataEvento.errors?.required" class="invalid-feedback">
                     Date-time is required.
                 </div>
@@ -80,7 +79,91 @@
         </div>
         <div class="card-footer p-3 d-flex justify-content-between">
             <input type="reset" class="btn btn-outline-secondary  col-5 col-md-2" value="Cancel changes"/>
-            <input type="button" class="btn btn-success  col-5 col-md-2" value="Save" [disabled]="!eventDetailForm.valid" (click)="saveChanges()"/>
+            <input type="button" class="btn btn-success  col-5 col-md-2" value="Save"
+              [disabled]="!eventDetailForm.valid" (click)="saveEvent()"/>
         </div>
     </form>
 </div>
+
+<div class="card rounded shadow-sm my-4" *ngIf="editMode">
+    <div class="p-3">
+      <div class="d-flex border-bottom justify-content-between">
+        <h2 >
+          Event Lots
+        </h2>
+        <h2>
+          <i class="fas fa-money-bill-wave"></i>
+        </h2>
+      </div>
+      <p>Select Lot button to add and fill new Lots</p>
+      <div class="form-row p-1" >
+        <div class="col" [formGroup]="eventDetailForm">
+          <div formArrayName="lotes" *ngFor="let lote of lots.controls; let i=index">
+            <fieldset class="form-group mb-3" [formGroupName]="i">
+              <legend class="d-flex justify-content-between capitalize">
+                <h3>{{lots.get(i+".nome").value}}</h3>
+                <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+                  tooltip="Delete Lote" [adaptivePosition]="false"
+                  [delay]="500" placement="left"
+                  (click)="modalDelete(i, template)">
+                <i class="fa fa-window-close my-1 me-1"></i>
+                <b class="ml-1 d-none d-sm-block">Delete</b>
+              </button>
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label>Lot name</label>
+                <input type="text" class="form-control" placeholder="Lote"
+                  formControlName="nome" [ngClass]="cssValidator(lots.get(i+'.nome'))">
+              </div>
+              <div class="form-group col-md-4 my-1">
+                <label>Quantity</label>
+                <input type="text" class="form-control" placeholder="000"
+                  formControlName="quantidade" [ngClass]="cssValidator(lots.get(i+'.quantidade'))" >
+              </div>
+              <div class="form-group col-md-4">
+                <label>Price</label>
+                <input type="text" currencyMask class="form-control" placeholder="R$ 0,00"
+                  formControlName="preco" [ngClass]="cssValidator(lots.get(i+'.preco'))" 
+                  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',',align:'left'}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Start Date</label>
+                <input type="text" class="form-control" placeholder="01/01/2019"
+                  formControlName="dataInicio" bsDatepicker [bsConfig]="bsConfigLot">
+              </div>
+              <div class="form-group col-md-4">
+                <label>End Date</label>
+                <input type="text" class="form-control" placeholder="01/01/2019"
+                  formControlName="dataFim" bsDatepicker [bsConfig]="bsConfigLot">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <button (click)="addLot()" class="d-flex btn btn-outline-primary">
+      <i class="fa fa-plus-circle my-1 me-1"></i>
+      <b class="ml-1"> Lot</b>
+    </button>
+  </div>
+  <div class="card-footer p-3 d-flex justify-content-between">
+    
+      <button class="btn btn-outline-secondary border col-5 col-md-2">
+        Cancel
+      </button>
+      <button class="btn btn-success col-5 col-md-2" [disabled]="!this.lots.valid" (click)="saveLots()">
+        Save Lots
+      </button>
+  
+  </div>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-body text-center">
+      <p>Are you sure want to delete the Lot {{this.lots.value[lotToDelete].nome}}?</p>
+      <button type="button" class="btn btn-default" (click)="deleteLot()" >Yes</button>
+      <button type="button" class="btn btn-primary" (click)="declineModal()" >No</button>
+  </div>
+</ng-template>
