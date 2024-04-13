@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgxCurrencyDirective } from "ngx-currency";
+// import { NgxCurrencyDirective } from "ngx-currency";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventsComponent } from './components/events/events.component';
@@ -67,7 +67,7 @@ import { LoginComponent } from './components/user/login/login.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
-    NgxCurrencyDirective,
+    // NgxCurrencyDirective,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
