@@ -6,7 +6,7 @@
         <div class="flex-fill pe-3">
             <div class="input-group  mb-2">
                 <label class="input-group-text bg-emphasis-dark text-light">Filter: </label>
-                <input type="text" class="form-control me-2" placeholder="Find" [(ngModel)]="filtroLista">
+                <input type="text" class="form-control me-2 bg-b-dark" placeholder="Find" [(ngModel)]="filtroLista">
             </div>
             <!-- <h4 >Filtro: {{filtroLista}}</h4>    -->
         </div>
@@ -40,7 +40,7 @@
         <tbody *ngIf="eventos && eventos.length" class="">
             <tr *ngFor="let evento of eventosFiltrados" (click)="redirectDetail(evento.id)">
                 <td class="d-none d-md-table-cell">
-                    <img src="assets/{{evento.imagemURL}}" [style.width.px]= "larguraImagem" 
+                    <img [src]="showImage(evento.imagemURL)" [style.width.px]= "larguraImagem" 
                     alt="Event image" [collapse]="!exibirImagem" [isAnimated]="true">
                 </td>
                 <td>{{evento.id}}</td>

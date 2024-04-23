@@ -1,170 +1,198 @@
-<div class="card bg-b-dark p-4">
-  <div class="card p-4" >
-      <form action="" [formGroup]="eventDetailForm">
-          <div class="mb-3">
-              <label for="theme" class="form-label">Theme:</label>
-              <input type="text" name="theme" id="theme" class="form-control" placeholder="Insert theme" 
-                  formControlName="tema" [ngClass]="cssValidator(EDFItem.tema)" />
-                  <div *ngIf="EDFItem.tema.errors?.required" class="invalid-feedback">
-                      Theme is required.
+<div class="d-md-flex bg-b-dark  shadow mb-3">
+  <div [ngClass]="{'col-md-8':editMode, 'col-12':!editMode}" >
+    <div class=" bg-b-dark p-4">
+      <div class="card p-4" >
+          <form action="" [formGroup]="eventDetailForm">
+              <div class="mb-3">
+                  <label for="theme" class="form-label">Theme:</label>
+                  <input type="text" name="theme" id="theme" class="form-control" placeholder="Insert theme" 
+                      formControlName="tema" [ngClass]="cssValidator(EDFItem.tema)" [(ngModel)]="event.tema" />
+                      <div *ngIf="EDFItem.tema.errors?.required" class="invalid-feedback">
+                          Theme is required.
+                      </div>
+                      <div *ngIf="EDFItem.tema.errors?.minlength" class="invalid-feedback">
+                          theme has to be more than 4 characters.
+                      </div>
+                      <div *ngIf="EDFItem.tema.errors?.maxlength" class="invalid-feedback">
+                          Theme length has to be less than 50 characters.
+                      </div>
+              </div>
+              
+              <div class="d-block d-md-flex col-12 ">
+                  <div class="col-md-8 pe-md-2 mb-3">
+                      <label for="local" class="form-label">Local:</label>
+                      <input type="text" name="local" id="local" class="form-control" placeholder="Insert the local address" 
+                          formControlName="local" [ngClass]="cssValidator(EDFItem.local)" [(ngModel)]="event.local"/>
+                      <div *ngIf="EDFItem.local.errors?.required" class="invalid-feedback">
+                          Local is required.
+                      </div>
+                      <div *ngIf="EDFItem.local.errors?.maxlength" class="invalid-feedback">
+                          Local has to be less than 100 characters.
+                      </div>
                   </div>
-                  <div *ngIf="EDFItem.tema.errors?.minlength" class="invalid-feedback">
-                      theme has to be more than 4 characters.
+                  <div class="col-md-4 ps-md-2 mb-3">
+                      <label for="date-time"class="form-label">Date-time:</label>
+                      <input type="text" name="date-time" id="date-time"
+                        class="form-control" formControlName="dataEvento" 
+                        [ngClass]="cssValidator(EDFItem.dataEvento)" [(ngModel)]="event.dataEvento"
+                        bsDatepicker [bsConfig]="bsConfigEvent" value="{{event.dataEvento| DateFormat}}"/>
+                      <div *ngIf="EDFItem.dataEvento.errors?.required" class="invalid-feedback">
+                          Date-time is required.
+                      </div>
                   </div>
-                  <div *ngIf="EDFItem.tema.errors?.maxlength" class="invalid-feedback">
-                      Theme length has to be less than 50 characters.
+              </div>
+              <div class="d-block d-md-flex col-12">
+                  <div class="col-md-3 mb-3">
+                      <label for="people-qtt" class="form-label">People Qtt</label>
+                      <input type="number" name="people-qtt" id="people-qtt" class="form-control"
+                        placeholder="Ex:1000" formControlName="qtdPessoas"
+                        [ngClass]="cssValidator(EDFItem.qtdPessoas)" [(ngModel)]="event.qtdPessoas"/>
+                      <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
+                          People Quantity is required.
+                      </div>
+                      <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
+                          People Quantity has to be lass than a milion.
+                      </div>
                   </div>
+                  <div class="col-md-4 px-md-3 mb-3">
+                      <label for="number" class="form-label">Number</label>
+                      <input type="text" name="number" id="number" class="form-control"
+                        placeholder="Ex: (00) 00000-0000" formControlName="telefone"
+                        [ngClass]="cssValidator(EDFItem.telefone)" [(ngModel)]="event.telefone"/>
+                      <div *ngIf="EDFItem.telefone.errors?.required" class="invalid-feedback">
+                          Number is required.
+                      </div>
+                  </div>
+                  <div class="col-md-5 mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" name="email" id="email" class="form-control"
+                        placeholder="Ex: email@email.com" formControlName="email"
+                        [ngClass]="cssValidator(EDFItem.email)" [(ngModel)]="event.email"/>
+                      <div *ngIf="EDFItem.email.errors?.required" class="invalid-feedback">
+                          Email is required.
+                      </div>
+                      <div *ngIf="EDFItem.email.errors?.email" class="invalid-feedback">
+                          It has to be a valid email.
+                      </div>
+                  </div>              
+              </div>
+              <div class="card-footer p-3 d-flex justify-content-between">
+                  <input type="reset" class="btn btn-outline-secondary  col-5 col-md-2" value="Cancel changes"/>
+                  <input type="button" class="btn btn-success  col-5 col-md-2" value="Save"
+                    [disabled]="!eventDetailForm.valid" (click)="saveEvent()"/>
+              </div>
+          </form>
+      </div>
+    </div>
+    
+    <div class=" p-4 my-3 bg-b-dark" *ngIf="editMode">
+      <div class="card rounded shadow-sm mb-4 ">
+          <div class="p-3">
+            <div class="d-flex border-bottom justify-content-between">
+              <h2 >
+                Event Lots
+              </h2>
+              <h2>
+                <i class="fas fa-money-bill-wave"></i>
+              </h2>
+            </div>
+            <p>Select Lot button to add and fill new Lots</p>
+            <div class="form-row p-1" >
+              <div class="col" [formGroup]="eventDetailForm">
+                <div formArrayName="lotes" *ngFor="let lote of lots.controls; let i=index">
+                  <fieldset class="form-group mb-3" [formGroupName]="i">
+                    <legend class="d-flex justify-content-between capitalize">
+                      <h3>{{lots.get(i+".nome").value}}</h3>
+                      <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+                        tooltip="Delete Lote" [adaptivePosition]="false"
+                        [delay]="500" placement="left"
+                        (click)="modalDelete(i, template)">
+                      <i class="fa fa-window-close my-1 me-1"></i>
+                      <b class="ml-1 d-none d-sm-block">Delete</b>
+                    </button>
+                  </legend>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label>Lot name</label>
+                      <input type="text" class="form-control" placeholder="Lote"
+                        formControlName="nome" [ngClass]="cssValidator(lots.get(i+'.nome'))">
+                    </div>
+                    <div class="form-group col-md-4 my-1">
+                      <label>Quantity</label>
+                      <input type="text" class="form-control" placeholder="000"
+                        formControlName="quantidade" [ngClass]="cssValidator(lots.get(i+'.quantidade'))" >
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Price</label>
+                      <input type="text" currencyMask class="form-control" placeholder="R$ 0,00"
+                        formControlName="preco" [ngClass]="cssValidator(lots.get(i+'.preco'))" />
+      
+                      <!-- This if for R$ price mask using bgx-currency -->
+                      <!-- it's not implemented because a version errror -->
+                      <!-- <input type="text" currencyMask class="form-control" placeholder="R$ 0,00"
+                        formControlName="preco" [ngClass]="cssValidator(lots.get(i+'.preco'))" 
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',',align:'left'}"/> -->
+      
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Start Date</label>
+                      <input type="text" class="form-control" placeholder="01/01/2019"
+                        formControlName="dataInicio" bsDatepicker [bsConfig]="bsConfigLot">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>End Date</label>
+                      <input type="text" class="form-control" placeholder="01/01/2019"
+                        formControlName="dataFim" bsDatepicker [bsConfig]="bsConfigLot">
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
-          
-          <div class="d-block d-md-flex col-12 ">
-              <div class="col-md-8 pe-md-2 mb-3">
-                  <label for="local" class="form-label">Local:</label>
-                  <input type="text" name="local" id="local" class="form-control" placeholder="Insert the local address" 
-                      formControlName="local" [ngClass]="cssValidator(EDFItem.local)"/>
-                  <div *ngIf="EDFItem.local.errors?.required" class="invalid-feedback">
-                      Local is required.
-                  </div>
-                  <div *ngIf="EDFItem.local.errors?.maxlength" class="invalid-feedback">
-                      Local has to be less than 100 characters.
-                  </div>
-              </div>
-              <div class="col-md-4 ps-md-2 mb-3">
-                  <label for="date-time"class="form-label">Date-time:</label>
-                  <input type="text" name="date-time" id="date-time" class="form-control" 
-                  formControlName="dataEvento" [ngClass]="cssValidator(EDFItem.dataEvento)"
-                  bsDatepicker [bsConfig]="bsConfigEvent" value="{{event.dataEvento| DateFormat}}"/>
-                  <div *ngIf="EDFItem.dataEvento.errors?.required" class="invalid-feedback">
-                      Date-time is required.
-                  </div>
-              </div>
-          </div>
-          <div class="d-block d-md-flex col-12">
-              <div class="col-md-2 mb-3">
-                  <label for="people-qtt" class="form-label">People Qtt</label>
-                  <input type="number" name="people-qtt" id="people-qtt" class="form-control" placeholder="Ex:1000" 
-                      formControlName="qtdPessoas" [ngClass]="cssValidator(EDFItem.qtdPessoas)"/>
-                  <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
-                      People Quantity is required.
-                  </div>
-                  <div *ngIf="EDFItem.qtdPessoas.errors?.required" class="invalid-feedback">
-                      People Quantity has to be lass than a milion.
-                  </div>
-              </div>
-              <div class="col-md-2 px-md-3 mb-3">
-                  <label for="number" class="form-label">Number</label>
-                  <input type="text" name="number" id="number" class="form-control" placeholder="Ex: (00) 00000-0000"
-                      formControlName="telefone" [ngClass]="cssValidator(EDFItem.telefone)"/>
-                  <div *ngIf="EDFItem.telefone.errors?.required" class="invalid-feedback">
-                      Number is required.
-                  </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" name="email" id="email" class="form-control" placeholder="Ex: email@email.com"
-                      formControlName="email" [ngClass]="cssValidator(EDFItem.email)"/>
-                  <div *ngIf="EDFItem.email.errors?.required" class="invalid-feedback">
-                      Email is required.
-                  </div>
-                  <div *ngIf="EDFItem.email.errors?.email" class="invalid-feedback">
-                      It has to be a valid email.
-                  </div>
-              </div>
-              <div class="col-md-4 ps-md-3 mb-3">
-                  <label for="imgurl" class="form-label">ImgURL:</label>
-                  <input type="text" id="imgurl" class="form-control"
-                      formControlName="imagemURL" [ngClass]="cssValidator(EDFItem.imagemURL)"/>
-                  <div *ngIf="EDFItem.imagemURL.errors?.required" class="invalid-feedback">
-                      imagemURL is required.
-                  </div>
-              </div>
-          </div>
-          <div class="card-footer p-3 d-flex justify-content-between">
-              <input type="reset" class="btn btn-outline-secondary  col-5 col-md-2" value="Cancel changes"/>
-              <input type="button" class="btn btn-success  col-5 col-md-2" value="Save"
-                [disabled]="!eventDetailForm.valid" (click)="saveEvent()"/>
-          </div>
-      </form>
-  </div>
-</div>
-
-<div class="card p-4 my-4 bg-b-dark">
-  <div class="card rounded shadow-sm mb-4 " *ngIf="editMode">
-      <div class="p-3">
-        <div class="d-flex border-bottom justify-content-between">
-          <h2 >
-            Event Lots
-          </h2>
-          <h2>
-            <i class="fas fa-money-bill-wave"></i>
-          </h2>
+          <button (click)="addLot()" class="d-flex btn btn-outline-primary">
+            <i class="fa fa-plus-circle my-1 me-1"></i>
+            <b class="ml-1"> Lot</b>
+          </button>
         </div>
-        <p>Select Lot button to add and fill new Lots</p>
-        <div class="form-row p-1" >
-          <div class="col" [formGroup]="eventDetailForm">
-            <div formArrayName="lotes" *ngFor="let lote of lots.controls; let i=index">
-              <fieldset class="form-group mb-3" [formGroupName]="i">
-                <legend class="d-flex justify-content-between capitalize">
-                  <h3>{{lots.get(i+".nome").value}}</h3>
-                  <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
-                    tooltip="Delete Lote" [adaptivePosition]="false"
-                    [delay]="500" placement="left"
-                    (click)="modalDelete(i, template)">
-                  <i class="fa fa-window-close my-1 me-1"></i>
-                  <b class="ml-1 d-none d-sm-block">Delete</b>
-                </button>
-              </legend>
-              <div class="row">
-                <div class="form-group col-md-4">
-                  <label>Lot name</label>
-                  <input type="text" class="form-control" placeholder="Lote"
-                    formControlName="nome" [ngClass]="cssValidator(lots.get(i+'.nome'))">
-                </div>
-                <div class="form-group col-md-4 my-1">
-                  <label>Quantity</label>
-                  <input type="text" class="form-control" placeholder="000"
-                    formControlName="quantidade" [ngClass]="cssValidator(lots.get(i+'.quantidade'))" >
-                </div>
-                <div class="form-group col-md-4">
-                  <label>Price</label>
-                  <input type="text" currencyMask class="form-control" placeholder="R$ 0,00"
-                    formControlName="preco" [ngClass]="cssValidator(lots.get(i+'.preco'))" />
-  
-                  <!-- This if for R$ price mask using bgx-currency -->
-                  <!-- it's not implemented because a version errror -->
-                  <!-- <input type="text" currencyMask class="form-control" placeholder="R$ 0,00"
-                    formControlName="preco" [ngClass]="cssValidator(lots.get(i+'.preco'))" 
-                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',',align:'left'}"/> -->
-  
-                </div>
-                <div class="form-group col-md-4">
-                  <label>Start Date</label>
-                  <input type="text" class="form-control" placeholder="01/01/2019"
-                    formControlName="dataInicio" bsDatepicker [bsConfig]="bsConfigLot">
-                </div>
-                <div class="form-group col-md-4">
-                  <label>End Date</label>
-                  <input type="text" class="form-control" placeholder="01/01/2019"
-                    formControlName="dataFim" bsDatepicker [bsConfig]="bsConfigLot">
-                </div>
-              </div>
-            </fieldset>
-          </div>
+        <div class="card-footer p-3 d-flex justify-content-between">
+          
+            <button class="btn btn-outline-secondary border col-5 col-md-2">
+              Cancel
+            </button>
+            <button class="btn btn-success col-5 col-md-2" [disabled]="!this.lots.valid" (click)="saveLots()">
+              Save Lots
+            </button>
+        
         </div>
       </div>
-      <button (click)="addLot()" class="d-flex btn btn-outline-primary">
-        <i class="fa fa-plus-circle my-1 me-1"></i>
-        <b class="ml-1"> Lot</b>
-      </button>
     </div>
-    <div class="card-footer p-3 d-flex justify-content-between">
-      
-        <button class="btn btn-outline-secondary border col-5 col-md-2">
-          Cancel
-        </button>
-        <button class="btn btn-success col-5 col-md-2" [disabled]="!this.lots.valid" (click)="saveLots()">
-          Save Lots
-        </button>
-    
+  </div>
+  <div class=" bg-b-dark col-md-4 px-0 pb-3 mb-3" *ngIf="editMode">
+    <div class="card m-4 p-3 card-event-view" [formGroup]="eventDetailForm">
+      <div class="form-row">
+        <div class="form-group">
+          <input type="file" #file (change)="onFileChange($event)" class="form-control is-invalid d-none" placeholder="" >
+        </div>
+      </div>
+      <img src={{uploadImageUrl}}  class="upload-img pb-3 image img-fluid cursor-pointer" (click)="file.click()" 
+      tooltip="Upload new Image" [adaptivePosition]="false" placement="bottom" alt="Upload image">
+      <h4>{{event.tema}}</h4>
+      <p>
+        <b>Local: </b>{{event.local}} <br/>
+        <b>Date: </b>{{event.dataEvento | DateFormat}}
+      </p>
+      <hr />
+      <p>
+        <b>Contacts:</b> <br/>
+        <small class="text-muted">
+          Phone: {{event.telefone}} <br/>
+        </small> 
+        <small class="text-muted">
+          E-mail: {{event.email}}
+        </small>
+      </p>
+      <br>
+      <p><b>Capacity: </b> <small class="text-muted">{{event.qtdPessoas}}</small></p>
     </div>
   </div>
 </div>

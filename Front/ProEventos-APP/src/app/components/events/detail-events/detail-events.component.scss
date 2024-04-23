@@ -21,3 +21,17 @@
     --default-height: 25px;
     top: var(--default-height);
   }
+  .card-event-view{
+    position:sticky;
+    top:10px;
+  }
+
+  .upload-img{
+    margin:0 auto;
+    width:100%;
+    
+  }
+
+.cursor-pointer{
+  cursor:pointer;
+}

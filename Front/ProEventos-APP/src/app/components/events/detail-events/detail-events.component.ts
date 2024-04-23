@@ -9,6 +9,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment' ;
 
 @Component({
   selector: 'app-detail-events',
@@ -29,6 +30,10 @@ export class DetailEventsComponent implements OnInit{
       // If you want to set DatePicker to portuguese
       // this.localeService.use('pt-br');
     } 
+    uploadImageUrl:string = "assets/img/cloud-iconw.webp"; 
+    file:File;
+
+
     ngOnInit(): void { 
       this.loadEvent();
       this.validation();
@@ -36,7 +41,6 @@ export class DetailEventsComponent implements OnInit{
   
   // this variable mean the mode of change to make on the databese on save  (POST or PUT)
   saveState = 'postEvent';
-
   get editMode(){
     return this.saveState === "putEvent";
   }
@@ -82,6 +86,11 @@ export class DetailEventsComponent implements OnInit{
           // If you just type <this.event = event> the js will vinculate the memory addrees. It won't make a copy  
           this.event = {...event}; 
           this.eventDetailForm.patchValue(this.event);
+
+          if(this.event.imagemURL!==''){
+            this.uploadImageUrl = environment.apiURL+'Resources/images/'+this.event.imagemURL;
+          }
+
           // this.loadLots();
           this.event.lotes.forEach(lote =>{
             this.lots.push(this.createLot(lote));
@@ -130,7 +139,7 @@ export class DetailEventsComponent implements OnInit{
       qtdPessoas: ['', [Validators.required, Validators.max(999999)]],
       dataEvento: ['', [Validators.required]],
       telefone: ['', [Validators.required]],
-      imagemURL: ['', [Validators.required]],
+      imagemURL: ['', []],
       lotes: this.fb.array([])
     })
   }
@@ -216,4 +225,30 @@ export class DetailEventsComponent implements OnInit{
   //     }
   //   ).add(() => this.spinner.hide());
   // }
+
+  onFileChange(ev:any):void{
+    const reader= new FileReader();
+    reader.onload = (event:any) => this.uploadImageUrl =  event.target.result;
+
+    this.file = ev.target.files;
+    reader.readAsDataURL(this.file[0]);
+
+    this.uploadImage();
+  
+  }
+uploadImage():void{
+  this.spinner.show();
+  this.eventoService.postUpload(this.eventId, this.file).subscribe(
+    ()=>{
+      this.loadEvent();
+      this.toastr.success("Image successfuly uploaded", "Success");
+    },
+    (error:any)=>{
+      this.toastr.error("Something wrong occurred trying to upload image", "Error");
+      console.log(error);
+    }
+  ).add(()=>{this.spinner.hide();});
+
+}
+
 }

@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from '@app/models/Evento';
 import { EventoService } from '@app/services/evento.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-list-events',
@@ -14,6 +15,7 @@ import { EventoService } from '@app/services/evento.service';
 export class ListEventsComponent implements OnInit{
   
   modalRef?: BsModalRef;
+  imagesUrl = environment.apiURL+"resources/images/";
   
   constructor(
     private eventoService:EventoService,
@@ -115,7 +117,12 @@ export class ListEventsComponent implements OnInit{
   public redirectDetail(id:number){
     this.url_detail = "/events/details/"+ id.toString();
     this.router.navigate([this.url_detail])
+  }
 
+  public showImage(imageUrl:String):string{
+    return (imageUrl!=='')?
+    `${environment.apiURL}resources/images/${imageUrl}` :
+    'assets/img/no-image.png';
   }
   
 }
