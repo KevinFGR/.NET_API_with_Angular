@@ -3,6 +3,20 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+ProEventos.db-shm
+ProEventos.db-wal
+
+Back/src/ProEventos.API/bin
+Back/src/ProEventos.API/obj
+
+Debug
+
+obj
+obj/
+bin
+bin/
+
+
 # User-specific files
 *.rsuser
 *.suo
