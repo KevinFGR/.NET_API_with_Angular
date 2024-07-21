@@ -537,3 +537,8 @@ testem.log
 Thumbs.db
 
 .Front/ProEventos-APP/.angular/cache/
+Back/src/ProEventos.API/obj/Debug/net7.0/ProEventos.API.GeneratedMSBuildEditorConfig.editorconfig
+Back/src/ProEventos.API/obj/Debug/net7.0/apphost.exe
+Back/src/ProEventos.API/obj/Debug/net7.0/ProEventos.API.AssemblyInfo.cs
+Back/src/ProEventos.API/obj/
+Back/src/ProEventos.API/debug/
