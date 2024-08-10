@@ -40,7 +40,7 @@ public class AccountService : IAccountService
         }
     }
 
-    public async Task<UserDto> CreateAccountAsync(UserDto userDto)
+    public async Task<UserUpdateDto> CreateAccountAsync(UserDto userDto)
     {
         try
         {
@@ -48,7 +48,7 @@ public class AccountService : IAccountService
             var result = await _userManager.CreateAsync(user, userDto.Password);
 
             if(result.Succeeded){
-                var userReturn = _mapper.Map<UserDto>(user);
+                var userReturn = _mapper.Map<UserUpdateDto>(user);
                 return userReturn;
             }
             return null;

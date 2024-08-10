@@ -1,31 +1,31 @@
 <div class="container border border-primary-subtle rounded d-flex mt-5 bg-dark px-3 py-4">
-    <div class="container d-none d-md-block col-6">
+    <div class="container d-none d-lg-block col-6">
         <h2 class="text-center">Registrate User</h2>
-        <img src="assets/registerImage.png" alt="register image">
+        <img src="assets/img/registerImage.png" alt="register image">
     </div>
-    <div class="container col-md-7 col-lg-6">
-        <form action="" [formGroup]="registrationForm">
-            <legend class="d-block d-md-none border-bottom">Registrate User</legend>
+    <div class="container col-lg-6">
+        <form (ngSubmit)="register()" [formGroup]="registrationForm">
+            <legend class="d-block d-lg-none border-bottom">Registrate User</legend>
             <div class="d-flex w-100">
                 <div class="col-6 py-1 mb-3">
-                    <label for="FName" class="form-label">First Name:</label>
-                    <input type="text" name="FName" id="FName"  class="form-control" placeholder="Firts name here"
-                    formControlName="FName" [ngClass]="{'is-invalid': RFormItem.FName.errors && RFormItem.FName.touched}"/>
-                        <div *ngIf="RFormItem.FName.errors?.required" class="invalid-feedback">
+                    <label for="primeiroNome" class="form-label">First Name:</label>
+                    <input type="text" name="primeiroNome" id="primeiroNome"  class="form-control" placeholder="Firts name here"
+                    formControlName="primeiroNome" [ngClass]="{'is-invalid': RFormItem.primeiroNome.errors && RFormItem.primeiroNome.touched}"/>
+                        <div *ngIf="RFormItem.primeiroNome.errors?.required" class="invalid-feedback">
                             First name is required.
                         </div>
-                        <div *ngIf="RFormItem.FName.errors?.maxlength" class="invalid-feedback">
+                        <div *ngIf="RFormItem.primeiroNome.errors?.maxlength" class="invalid-feedback">
                             First name has to be less than 20 characters.
                         </div>
                 </div>
                 <div class="col-6 p-1 mb-3">
-                    <label for="LName" class="form-label">Last Name:</label>
-                    <input type="text" name="LName" id="LName"  class="form-control" placeholder="Last name here"
-                    formControlName="LName" [ngClass]="{'is-invalid':RFormItem.LName.errors && RFormItem.LName.touched}"/>
-                        <div *ngIf="RFormItem.LName.errors?.required" class="invalid-feedback">
+                    <label for="ultimoNome" class="form-label">Last Name:</label>
+                    <input type="text" name="ultimoNome" id="ultimoNome"  class="form-control" placeholder="Last name here"
+                    formControlName="ultimoNome" [ngClass]="{'is-invalid':RFormItem.ultimoNome.errors && RFormItem.ultimoNome.touched}"/>
+                        <div *ngIf="RFormItem.ultimoNome.errors?.required" class="invalid-feedback">
                             Last name is required.
                         </div>
-                        <div *ngIF="RFormItem.LName.errors?.maxlength" class="invalid-feedback">
+                        <div *ngIF="RFormItem.ultimoNome.errors?.maxlength" class="invalid-feedback">
                             Last name can not have more than 50 characters.
                         </div>
                 </div>
@@ -43,14 +43,14 @@
                     </div>
             </div>
             <div class="mb-3">
-                <label for="User" class="form-label">User:</label>
-                <input type="text" name="User" id="User"  class="form-control" placeholder="Your user here"
-                formControlName="user" [ngClass]="{'is-invalid': RFormItem.user.errors && RFormItem.user.touched}"/>
-                    <div *ngIf="RFormItem.user.errors?.required" class="invalid-feedback">
-                        User is required.
+                <label for="userName" class="form-label">UserName:</label>
+                <input type="text" name="userName" id="userName"  class="form-control" placeholder="Your UserName here"
+                formControlName="userName" [ngClass]="{'is-invalid': RFormItem.userName.errors && RFormItem.userName.touched}"/>
+                    <div *ngIf="RFormItem.userName.errors?.required" class="invalid-feedback">
+                        UserName is required.
                     </div>
-                    <div *ngIf="RFormItem.user.errors?.maxlength" class="invalid-feedback">
-                        User can not have more than 20 characters.
+                    <div *ngIf="RFormItem.userName.errors?.maxlength" class="invalid-feedback">
+                        UserName can not have more than 20 characters.
                     </div>
             </div>
             <div class="d-flex">
@@ -87,7 +87,7 @@
                     </div>
             </div>
             
-            <input type="submit" class="btn btn-success col-12 mb-3" [disabled]="!registrationForm.valid"/>
+            <input type="submit" class="btn btn-success col-12 mb-3" [disabled]="!registrationForm.valid" value="Send"/>
 
             <div class="text-center">
                 <a class="btn btn-link btn-block" routerLink="/user/login">I'm already registred</a>

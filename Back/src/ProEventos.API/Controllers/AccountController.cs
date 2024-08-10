@@ -45,7 +45,11 @@ public class AccountController : ControllerBase
             }
             var user = await _accountService.CreateAccountAsync(userDto);
             if(user !=null){
-                return Ok(user);
+                return Ok(new{
+                userName = user.UserName,
+                PrimeiroNome = user.PrimeiroNome,
+                token = _tokenService.CreateToken(user).Result
+                });
             }
             
             return  BadRequest("Usuário não criado. Tente novamente mais tarde!");
@@ -69,7 +73,7 @@ public class AccountController : ControllerBase
             return Ok(new{
                 userName = user.UserName,
                 PrimeiroNome = user.PrimeiroNome,
-                token = _tokenService.CreateToken(user)
+                token = _tokenService.CreateToken(user).Result
             });
         }
         catch (Exception ex)

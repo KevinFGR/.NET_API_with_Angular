@@ -10,6 +10,7 @@ export class EventoService {
   constructor(private http:HttpClient) { }
 
   private baseURL:string = environment.apiURL+"api/eventos";
+  // private tokenHeader = new HttpHeaders({'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user'))}`})
 
   public getEvents(): Observable<Evento[]>{
     return this.http.get<Evento[]>(this.baseURL)

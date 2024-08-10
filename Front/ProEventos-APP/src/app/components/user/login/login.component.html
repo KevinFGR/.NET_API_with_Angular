@@ -1,11 +1,22 @@
 <div class="d-flex align-items-center vh-100 ">
     
     <div class="text-center  mx-auto  shadow px-5 pt-4 rounded align-middle bg-b-dark border border-primary-subtle">
-        <form class="form-signin" [formGroup]="loginForm">
+        <form #loginForm="ngForm" class="form-signin" (ngSubmit)="login()">
             <i class="fa fa-users fs-2 my-2"></i>
             <h2 class="my-3">Enter with</h2>
 
             <div name="dont remove this div" class="mb-2">
+                <label for="username" class="sr-only">Name</label>
+                <input class="form-control border border-primary-subtle bg-b-dark2 mb-1" placeholder="User" id="username"
+                 [(ngModel)] = "model.userName" type = "email" name="username" required />
+            </div>
+                
+            <label for="password" class="sr-only">Password</label>
+            <input id="password" placeholder="Password" class="form-control border border-primary-subtle bg-b-dark2"
+                [(ngModel)]="model.password" type="password" name="password" required />
+
+
+            <!-- <div name="dont remove this div" class="mb-2">
                 <label for="username" class="sr-only">Name</label>
                 <input id="username" name="username" type="text" placeholder="User" class="form-control border border-primary-subtle bg-b-dark2 mb-1" formControlName="login"
                 [ngClass]="{'is-invalid': LFormItem.login.errors && LFormItem.login.touched}"/>
@@ -21,9 +32,11 @@
 
             <div *ngIf="LFormItem.password.errors?.required" class="invalid-feedback">
                 Password is required.
-            </div>
-
+            </div> 
             <input type="submit" class="btn btn-primary w-100 mt-3" Value="Login" [disabled]="!loginForm.valid" />
+            -->
+
+            <input type="submit" class="btn btn-primary w-100 mt-3" Value="Login" [disabled]="loginForm.invalid"/>
             <p class="my-3 text-muted">Do not have a login? registrate here.</p>
             <a class="btn btn-lg mb-5 text-primary" routerLink="/user/registration">I want to registrate</a>
         </form>
