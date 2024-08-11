@@ -25,7 +25,7 @@
                         <div *ngIf="RFormItem.ultimoNome.errors?.required" class="invalid-feedback">
                             Last name is required.
                         </div>
-                        <div *ngIF="RFormItem.ultimoNome.errors?.maxlength" class="invalid-feedback">
+                        <div *ngIf="RFormItem.ultimoNome.errors?.maxlength" class="invalid-feedback">
                             Last name can not have more than 50 characters.
                         </div>
                 </div>

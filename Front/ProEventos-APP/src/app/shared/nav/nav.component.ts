@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from '@app/services/account.service';
 
 @Component({
   selector: 'app-nav',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-  constructor(private router:Router){}
+  constructor(private router:Router, public accountService:AccountService){}
 
   isCollapsed:boolean = true;
 
@@ -16,6 +17,10 @@ export class NavComponent {
       return false;
     }
     return true;
+  }
+  public logout(): void{
+    this.accountService.logout();
+    this.router.navigateByUrl('/user/login')
   }
 
 }
