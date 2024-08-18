@@ -17,7 +17,8 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 
 const routes: Routes = [
-  // {path : '', redirectTo : 'user/login', pathMatch : 'full'},
+  {path : '', redirectTo : 'user/login', pathMatch : 'full'},
+  {path:'login',redirectTo:'user/login'},
   {path : 'user', component:UserComponent,
     children:[
       {path:'login', component:LoginComponent},
@@ -29,7 +30,7 @@ const routes: Routes = [
     {path : 'contacts', component: ContactsComponent},
     {path : 'dashboard',component : DashboardComponent},
     {path : 'speakers', component : SpeakersComponent},
-    // {path:'events',redirectTo:'events/list'},
+    {path:'events',redirectTo:'events/list'},
     {path : 'events', component: EventsComponent,
       children:[
         {path:'list', component: ListEventsComponent},
@@ -38,8 +39,8 @@ const routes: Routes = [
       ]
     },
   ]},
-  // {path : 'home', component : HomeComponent},
-  // {path : '**', redirectTo: 'user/login', pathMatch : 'full'}
+  // {path : 'home', component : HomeComponent}, // to generate ...
+  {path : '**', redirectTo: 'user/login', pathMatch : 'full'}
 ];
 
 @NgModule({
