@@ -70,7 +70,8 @@ public class AccountController : ControllerBase
             var result = await _accountService.CheckUserPasswordAsync(user, userLogin.Password);
             if(!result.Succeeded) return Unauthorized();
 
-            return Ok(new{
+            return Ok(new
+            {
                 userName = user.UserName,
                 PrimeiroNome = user.PrimeiroNome,
                 token = _tokenService.CreateToken(user).Result
@@ -85,13 +86,20 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> UpdateUser(UserUpdateDto userUpdateDto){
         try
         {
+            if(userUpdateDto.UserName != User.GetUserName()) return Unauthorized("Invalid user");
+
             var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
             if(user == null){ return Unauthorized("Usuário Inválido"); }
 
             var userReturn = await _accountService.UpdateAccount(userUpdateDto);
             if(userReturn ==null){ return NoContent(); }
             
-            return  Ok(userReturn);
+            return Ok(new
+            {
+                userName = userReturn.UserName,
+                PrimeiroNome = userReturn.PrimeiroNome,
+                token = _tokenService.CreateToken(userReturn).Result
+            });
         }
         catch (Exception ex)
         {

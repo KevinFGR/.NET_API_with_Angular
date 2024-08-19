@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg shadow bg-b-dark" *ngIf="showMenu()">
   <div class="container-fluid">
-    <a class="navbar-brand " routerLink="/dashboard">
+    <a class="navbar-brand " routerLink="/home">
       <i class="fa fa-users ms-4 text-light"></i>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -11,6 +11,9 @@
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <ng-container *ngIf="(accountService.currentUser$ | async) !==null">
+          <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link text-white" aria-current="page" routerLink="/events/list" routerLinkActive="active">Events</a>
           </li>
@@ -29,7 +32,7 @@
           data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
             {{user.userName | titlecase}}
           </a>
-          <div *dropdownMenu class="dropdown-menu bg-b-dark border" aria-labelledby="navbarDropdownMenuLink">
+          <div *dropdownMenu class="dropdown-menu bg-b-dark border dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item text-white" routerLink="/user/profile">
               Profile
             </a>

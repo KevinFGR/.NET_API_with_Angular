@@ -1,22 +1,22 @@
 <app-title [title]="'Profile'" [fa_icon]="'fa fa-user'" [description]="'Edit your information'"></app-title>
 
 <div class="card mb-3">
-    <form action="" [formGroup]="profileForm">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <div class="d-lg-flex d-block flex-row m-3">
             
             <div class="card col-lg-3 col-12 text-center mb-3">
                 <img src="assets/perfil.png" alt="profile image" height="100px" width="100px" class="m-auto my-3 rounded-circle"/>
-                <h3>_userName</h3>
-                <p><b>Name:</b> Person name example</p>
-                <p>Here you can see a little description of the person profile containing some informations tha cam be helpfull for you.</p>
+                <h3>{{'@' + PFormItem.userName.value}}</h3>
+                <p><b>Name:</b> {{PFormItem.primeiroNome.value+' '+PFormItem.ultimoNome.value}}</p>
+                <p>{{PFormItem.descricao.value}}</p>
                 <div class="d-flex text-center">
                     <div class="card col-6 pt-2">
-                        <p><b>2323</b></p>
-                        <p>Number of something</p>
+                        <p><b>0</b></p>
+                        <p>Events Created</p>
                     </div>
                     <div class="card col-6 pt-2">
-                        <p><b>2323</b></p>
-                        <p>Number of other something</p>
+                        <p><b>0</b></p>
+                        <p>Events Participated</p>
                     </div>
                 </div>
             </div>
@@ -25,32 +25,39 @@
                 <div class="d-lg-flex d-block mb-3 form-row">
                     <div class="d-flex col-lg-7 col-12">
                         <div class="col-5">
-                            <label for="title" class="form-label">Title:</label>
-                            <select name="title" id="title" class="form-select">
-                                <option value="1">one</option>
-                                <option value="2">two</option>
+                            <label for="titulo" class="form-label">Title:</label>
+                            <select name="titulo" id="titulo" class="form-select" formControlName="titulo"
+                            [ngClass]="{'is-invalid': PFormItem.titulo.errors && PFormItem.titulo.touched }">
+                                <option value="Uninformed">Uninformed</option>
+                                <option value="Technologist">Technologist</option>
+                                <option value="Graduate">Graduate</option>
+                                <option value="Specialist">Specialist</option>
+                                <option value="PostGraduate">PostGraduate</option>
+                                <option value="Master">Master</option>
+                                <option value="Doctorate">Doctorate</option>
+                                <option value="PostDoctoral">PostDoctoral</option>
                             </select>
                         </div>
                         <div class="col-7 px-2">
-                            <label for="FName" class="form-label">First name:</label>
-                            <input type="text" name="FName" id="FName" class="form-control" formControlName="FName"
-                            [ngClass]="{'is-invalid':PFormItem.FName.errors && PFormItem.FName.touched}" />
-                                <div *ngIf="PFormItem.FName.errors?.required" class="invalid-feedback">
+                            <label for="primeiroNome" class="form-label">First name:</label>
+                            <input type="text" name="primeiroNome" id="primeiroNome" class="form-control" formControlName="primeiroNome"
+                            [ngClass]="{'is-invalid':PFormItem.primeiroNome.errors && PFormItem.primeiroNome.touched}" />
+                                <div *ngIf="PFormItem.primeiroNome.errors?.required" class="invalid-feedback">
                                     First name is required.
                                 </div>
-                                <div *ngIf="PFormItem.FName.errors?.maxlength" class="invalid-feedback" >
+                                <div *ngIf="PFormItem.primeiroNome.errors?.maxlength" class="invalid-feedback" >
                                     First name can not have more than 20 characters.
                                 </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-12">
-                        <label for="LName" class="form-label">Last name:</label>
-                        <input type="text" name="LName" id="LName" class="form-control" formControlName="LName"
-                        [ngClass]="{'is-invalid': PFormItem.LName.errors && PFormItem.LName.touched}" />
-                            <div *ngIf="PFormItem.LName.errors?.required" class="invalid-feedback">
+                        <label for="ultimoNome" class="form-label">Last name:</label>
+                        <input type="text" name="ultimoNome" id="ultimoNome" class="form-control" formControlName="ultimoNome"
+                        [ngClass]="{'is-invalid': PFormItem.ultimoNome.errors && PFormItem.ultimoNome.touched}" />
+                            <div *ngIf="PFormItem.ultimoNome.errors?.required" class="invalid-feedback">
                                 Last name is required.
                             </div>
-                            <div *ngIf="PFormItem.LName.errors?.maxlength" class="invalid-feedback">
+                            <div *ngIf="PFormItem.ultimoNome.errors?.maxlength" class="invalid-feedback">
                                 Last Name can not have more than 50 characters.
                             </div>
                     </div>
@@ -70,26 +77,28 @@
                             </div>
                     </div>
                     <div class="col-lg-3 col-12 px-lg-2 mt-3 mt-lg-0">
-                        <label for="phone" id="number" class="form-label">Number:</label>
-                        <input type="text" id="number" class="form-control" formControlName="number"
-                        [ngClass]="{'is-invalid':PFormItem.number.errors && PFormItem.number.touched}"/>
+                        <label for="phoneNumber" class="form-label">Phone:</label>
+                        <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber"
+                        [ngClass]="{'is-invalid':PFormItem.phoneNumber.errors && PFormItem.phoneNumber.touched}"/>
                             <div class="invalid-feedback">
-                                Number is required.
+                                Phone is required.
                             </div>
                     </div>
                     <div class="col-lg-4 col-12 mt-3 mt-lg-0">
-                        <label for="function" id="function" class="form-label">Function:</label>
-                        <select type="text" class="form-select">
-                            <option value="speaker">Speaker</option>
-                            <option value="participant">Participant</option>
+                        <label for="funcao" class="form-label">Function:</label>
+                        <select name="funcao" id="funcao" class="form-select" formControlName="funcao"
+                        [ngClass]="{'is-invalid': PFormItem.funcao.errors && PFormItem.funcao.touched }">
+                            <option value="Uninformed">Uninformed</option>
+                            <option value="Participant">Participant</option>
+                            <option value="Speaker">Speaker</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-row mt-3"> 
                     <div class="col-12">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea type="text" id="description" class="form-control"></textarea>
+                        <label for="descricao" class="form-label">Description</label>
+                        <textarea type="text" id="descricao" class="form-control" formControlName="descricao"></textarea>
                     </div>
                 </div>
 
@@ -108,7 +117,7 @@
                                 Password is required.
                             </div>
                             <div *ngIf="PFormItem.password.errors?.minlength && PFormItem.password.touched" class="invalid-feedback">
-                                Password has to be more than 8 characters.
+                                Password has to be more than 3 characters.
                             </div>
                     </div>
                     <div class="col-lg-6 col-12">

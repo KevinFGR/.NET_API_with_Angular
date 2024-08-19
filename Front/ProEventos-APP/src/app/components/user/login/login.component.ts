@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '@app/models/identity/User';
 import { UserLogin } from '@app/models/identity/UserLogin';
 import { AccountService } from '@app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
@@ -33,7 +34,9 @@ export class LoginComponent implements OnInit{
   
   public login(): void{
     this.accountService.login(this.model).subscribe(
-      ()=> { this.router.navigateByUrl('/dashboard'); },
+      ()=> { 
+        this.router.navigateByUrl('/dashboard');
+      },
       (error:any) => {
         if(error.status == 401){
           this.toastr.error('Usuário ou senha inválido');
@@ -47,6 +50,4 @@ export class LoginComponent implements OnInit{
   ngOnInit():void{
     // this.validation();
   }
-
-
 }
